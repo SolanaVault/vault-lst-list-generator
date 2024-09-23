@@ -26,12 +26,21 @@ const saveDataToGitHub = async (data: Record<string, any>, timestamp: number) =>
     const content = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
 
     try {
+        // Get the SHA of the current file
+        const result = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`, {
+            owner,
+            repo,
+            file_path: path,
+            branch: "main"
+        });
+
         await octokit.repos.createOrUpdateFileContents({
             owner,
             repo,
             path,
             message: `Add data for timestamp ${timestamp}`,
             content,
+            sha: result.data.sha,
         });
         console.log(`Data saved to GitHub at ${path}`);
     } catch (error) {
@@ -64,19 +73,21 @@ const run = async () => {
     await Promise.all(pools.map(async (pool: any) => {
         const candle = await getLatestFullCandle(pool.swap.config.swapAccount);
         if (candle) {
-        const fees = Number(pool.swap.state.fees.trade.numeratorStr) / Number(pool.swap.state.fees.trade.denominatorStr);
-        const feesUsd = fees * candle.v;
-        data[candle.address] = {
-            c: candle.c,
-            o: candle.o,
-            h: candle.h,
-            l: candle.l,
-            v: candle.v,
-            fees,
-            feesUsd
+            const fees = Number(pool.swap.state.fees.trade.numeratorStr) / Number(pool.swap.state.fees.trade.denominatorStr);
+            const feesUsd = fees * candle.v;
+            data[candle.address] = {
+                c: candle.c,
+                o: candle.o,
+                h: candle.h,
+                l: candle.l,
+                v: candle.v,
+                fees,
+                feesUsd
             }
         }
     }));
+
+    console.log(data)
 
     // Save in github with the unix timestamp as the filename
     await saveDataToGitHub(data, Date.now());
