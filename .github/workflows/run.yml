@@ -1,0 +1,37 @@
+name: Run crank
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  run-crank:
+    name: Fetch data
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.1
+          cache: npm
+
+      - name: Install Dependencies
+        id: yarn-ci
+        run: yarn install
+
+      - name: Run bot
+        id: run-bot
+        env:
+          BIRDEYE_API_KEY: ${{ secrets.BIRDEYE_API_KEY }}
+          RPC_URL: ${{ secrets.RPC_URL }}
+          G_TOKEN: ${{ secrets.G_TOKEN }}
+        run: yarn start

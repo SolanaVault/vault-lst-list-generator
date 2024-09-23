@@ -1,0 +1,17 @@
+{
+  "name": "tribeca-epoch-crank",
+  "packageManager": "yarn@1.22.22",
+  "devDependencies": {
+    "@types/node": "^22.4.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4"
+  },
+  "type": "module",
+  "scripts": {
+    "local": "tsx --env-file=.env bot.ts",
+    "start": "ts-node bot.ts"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.2"
+  }
+}
