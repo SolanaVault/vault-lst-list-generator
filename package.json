@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "local": "tsx --env-file=.env bot.ts",
-    "start": "ts-node bot.ts"
+    "start": "tsx bot.ts"
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2"
