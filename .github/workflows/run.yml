@@ -31,7 +31,6 @@ jobs:
       - name: Run bot
         id: run-bot
         env:
-          BIRDEYE_API_KEY: ${{ secrets.BIRDEYE_API_KEY }}
           RPC_URL: ${{ secrets.RPC_URL }}
           G_TOKEN: ${{ secrets.G_TOKEN }}
         run: yarn start
@@ -43,4 +42,3 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: gautamkrishnar/keepalive-workflow@v2
-      

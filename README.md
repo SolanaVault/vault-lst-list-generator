@@ -1,3 +1,0 @@
-# birdeye-data-fetcher
-
-commit
