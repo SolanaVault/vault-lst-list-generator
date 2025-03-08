@@ -1,19 +1,8 @@
 import { Octokit } from "@octokit/rest";
-
-type BirdeyeOHLCVResult = {
-  data: {
-    items: {
-      address: string;
-      unixTime: number;
-      v: number;
-      c: number;
-      h: number;
-      l: number;
-      o: number;
-      type: string;
-    }[];
-  };
-};
+import { getMetadataAccount } from "./helpers/metadata";
+import { decodeMetadata } from "./helpers/metadata";
+import { Connection } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 
 const saveDataToGitHub = async (
   data: Record<string, any>,
@@ -24,8 +13,8 @@ const saveDataToGitHub = async (
   });
 
   const owner = "saberdao";
-  const repo = "birdeye-data";
-  const path = `volume.json`;
+  const repo = "lp-token-list-v2";
+  const path = `token-list.json`;
   const content = Buffer.from(JSON.stringify(data, null, 2)).toString("base64");
 
   try {
@@ -54,24 +43,37 @@ const saveDataToGitHub = async (
   }
 };
 
-const getLatestFullCandle = async (poolAddress: string) => {
-  const now = Math.floor(Date.now() / 1000);
-  const hour = now - 86400 * 3;
-  const result = await fetch(
-    `https://public-api.birdeye.so/defi/ohlcv/pair?address=${poolAddress}&type=1D&time_to=${now}&time_from=${hour}`,
-    {
-      headers: {
-        "X-API-KEY": process.env.BIRDEYE_API_KEY!,
-      },
-    }
-  );
-  const data: BirdeyeOHLCVResult = await result.json();
+const getTokenMetadataFromChain = async (
+  connection: Connection,
+  mint: PublicKey
+) => {
+  try {
+    const metadataAccount = await getMetadataAccount(mint.toString());
+    const metadataAccountInfo = await connection.getAccountInfo(
+      new PublicKey(metadataAccount)
+    );
+    console.log(metadataAccountInfo);
 
-  // Take the most recent candle that's over 24 hours old
-  const candle = data.data.items
-    .sort((a, b) => b.unixTime - a.unixTime)
-    .find((c) => c.unixTime < now - 86400);
-  return candle;
+    // finally, decode metadata
+    const data = decodeMetadata(metadataAccountInfo!.data);
+    const info = await connection.getParsedAccountInfo(mint);
+
+    const meta = (await (await fetch(data.data.uri)).json()) as {
+      image: string;
+    };
+    const result = {
+      ...data,
+      ...meta,
+      // @ts-expect-error ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      decimals: info.value?.data.parsed.info.decimals, // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+    };
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 };
 
 const run = async () => {
@@ -86,22 +88,30 @@ const run = async () => {
 
   // For each pool, get the latest full candle and the fees
   for (const pool of pools) {
-    const candle = await getLatestFullCandle(pool.swap.config.swapAccount);
-    if (candle) {
-      const fees =
-        Number(pool.swap.state.fees.trade.numeratorStr) /
-        Number(pool.swap.state.fees.trade.denominatorStr);
-      const feesUsd = fees * candle.v;
-      data[candle.address] = {
-        c: candle.c,
-        o: candle.o,
-        h: candle.h,
-        l: candle.l,
-        v: candle.v,
-        fees,
-        feesUsd,
-      };
+    const lpTokenAddress = pool.lpToken.address;
+    console.log(lpTokenAddress);
+
+    const connection = new Connection(process.env.RPC_URL!);
+    const metadata = await getTokenMetadataFromChain(
+      connection,
+      new PublicKey(lpTokenAddress)
+    );
+    console.log(metadata);
+
+    if (!metadata) {
+      continue;
     }
+
+    const token = {
+      address: lpTokenAddress,
+      name: pool.lpToken.name,
+      symbol: pool.lpToken.symbol,
+      decimals: metadata?.decimals,
+      chainId: 101,
+      logoURI: metadata?.image,
+    };
+
+    data[token.address] = token;
   }
 
   console.log(data);
