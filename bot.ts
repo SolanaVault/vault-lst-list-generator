@@ -142,7 +142,7 @@ const getLstList = async (connection: Connection) => {
   );
 
   return JSON.stringify(
-    data,
+    data.flat(),
     (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
     2
   );
