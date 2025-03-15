@@ -8,12 +8,10 @@ import {
   dstInfoParser,
   findDSTInfoAddress,
 } from "@thevault/dst";
+import _ from "lodash";
 import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
 
-const saveDataToGitHub = async (
-  data: Record<string, any>,
-  timestamp: number
-) => {
+const saveDataToGitHub = async (data: string, timestamp: number) => {
   const octokit = new Octokit({
     auth: process.env.G_TOKEN,
   });
@@ -21,7 +19,7 @@ const saveDataToGitHub = async (
   const owner = "SolanaVaults";
   const repo = "lst-list-generator";
   const path = `lst-list.json`;
-  const content = Buffer.from(JSON.stringify(data, null, 2)).toString("base64");
+  const content = Buffer.from(data).toString("base64");
 
   try {
     // Get the SHA of the current file
@@ -49,31 +47,37 @@ const saveDataToGitHub = async (
   }
 };
 
-const getTokenMetadataFromChain = async (
+const getTokenMetadatasFromChain = async (
   connection: Connection,
-  mint: PublicKey
+  mints: PublicKey[]
 ) => {
   try {
-    const metadataAccount = await getMetadataAccount(mint.toString());
-    const metadataAccountInfo = await connection.getAccountInfo(
-      new PublicKey(metadataAccount)
+    const metadataAccounts = mints.map((_mint) =>
+      getMetadataAccount(_mint.toString())
     );
-    console.log(metadataAccountInfo);
+    const metadataAccountInfos = await connection.getMultipleAccountsInfo(
+      metadataAccounts.map(
+        (_metadataAccount) => new PublicKey(_metadataAccount)
+      )
+    );
+    const infos = await connection.getMultipleParsedAccounts(mints);
 
     // finally, decode metadata
-    const data = decodeMetadata(metadataAccountInfo!.data);
-    const info = await connection.getParsedAccountInfo(mint);
-
-    const meta = (await (await fetch(data.data.uri)).json()) as {
-      image: string;
-    };
-    const result = {
-      ...data,
-      ...meta,
-      // @ts-expect-error ignore
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      decimals: info.value?.data.parsed.info.decimals, // eslint-disable-line @typescript-eslint/no-unsafe-assignment
-    };
+    const result = await Promise.all(
+      metadataAccountInfos.map(async (_metadataAccountInfo, _index) => {
+        const data = decodeMetadata(_metadataAccountInfo!.data);
+        const info = infos.value[_index];
+        const meta = (await (await fetch(data.data.uri)).json()) as {
+          image: string;
+        };
+        return {
+          ...data,
+          ...meta,
+          // @ts-expect-error ignore
+          decimals: info?.data.parsed.info.decimals,
+        };
+      })
+    );
     console.log(result);
     return result;
   } catch (e) {
@@ -125,12 +129,15 @@ const getLstList = async (connection: Connection) => {
 
   // Metadata append
   const data = await Promise.all(
-    merged.map(async (account) => {
-      const metadata = await getTokenMetadataFromChain(
-        connection,
-        account.data.tokenMint
-      );
-      return { ...account, metadata: { ...metadata, createdOn: undefined } };
+    _.chunk(merged, 100).map(async (accounts) => {
+      const mints = accounts.map((account) => account.data.tokenMint);
+      const metadata = await getTokenMetadatasFromChain(connection, mints);
+      return accounts.map((account, index) => {
+        return {
+          ...account,
+          metadata: { ...metadata?.[index], createdOn: undefined },
+        };
+      });
     })
   );
 
@@ -146,7 +153,7 @@ const run = async () => {
   const data = await getLstList(connection);
   console.log(data);
 
-  await saveDataToGitHub(data, Date.now());
+  // await saveDataToGitHub(data, Date.now());
 };
 
 run();

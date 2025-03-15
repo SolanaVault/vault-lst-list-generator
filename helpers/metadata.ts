@@ -53,7 +53,7 @@ const toPublicKey = (key: string | PublicKey) => {
   return result;
 };
 
-const findProgramAddress = async (
+const findProgramAddress = (
   seeds: (Buffer | Uint8Array)[],
   programId: PublicKey
 ) => {
@@ -62,7 +62,7 @@ const findProgramAddress = async (
   //     seeds.reduce((agg, item) => agg + item.toString("hex"), "") +
   //     programId.toString();
 
-  const result = await PublicKey.findProgramAddress(seeds, programId);
+  const result = PublicKey.findProgramAddressSync(seeds, programId);
 
   return [result[0].toBase58(), result[1]] as [string, number];
 };
@@ -187,19 +187,17 @@ const METADATA_SCHEMA = new Map<any, any>([
   ],
 ]);
 
-export async function getMetadataAccount(
+export function getMetadataAccount(
   tokenMint: StringPublicKey
-): Promise<StringPublicKey> {
-  return (
-    await findProgramAddress(
-      [
-        Buffer.from(METADATA_PREFIX),
-        toPublicKey(METADATA_PROGRAM_ID).toBuffer(),
-        toPublicKey(tokenMint).toBuffer(),
-      ],
-      toPublicKey(METADATA_PROGRAM_ID)
-    )
-  )[0];
+): StringPublicKey {
+  return PublicKey.findProgramAddressSync(
+    [
+      Buffer.from(METADATA_PREFIX),
+      toPublicKey(METADATA_PROGRAM_ID).toBuffer(),
+      toPublicKey(tokenMint).toBuffer(),
+    ],
+    toPublicKey(METADATA_PROGRAM_ID)
+  )[0].toString();
 }
 
 const METADATA_REPLACE = new RegExp("\u0000", "g");
