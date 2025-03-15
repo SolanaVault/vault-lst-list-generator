@@ -3,6 +3,12 @@ import { getMetadataAccount } from "./helpers/metadata";
 import { decodeMetadata } from "./helpers/metadata";
 import { Connection } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
+import {
+  DST_PROGRAM_ID,
+  dstInfoParser,
+  findDSTInfoAddress,
+} from "@thevault/dst";
+import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
 
 const saveDataToGitHub = async (
   data: Record<string, any>,
@@ -12,9 +18,9 @@ const saveDataToGitHub = async (
     auth: process.env.G_TOKEN,
   });
 
-  const owner = "saberdao";
-  const repo = "lp-token-list-v2";
-  const path = `token-list.json`;
+  const owner = "SolanaVaults";
+  const repo = "lst-list-generator";
+  const path = `lst-list.json`;
   const content = Buffer.from(JSON.stringify(data, null, 2)).toString("base64");
 
   try {
@@ -76,47 +82,70 @@ const getTokenMetadataFromChain = async (
   }
 };
 
-const run = async () => {
-  const poolsData = await (
-    await fetch(
-      "https://raw.githubusercontent.com/saberdao/saber-registry-dist/master/data/pools-info.mainnet.json"
+const getLstList = async (connection: Connection) => {
+  const info = (await connection.getProgramAccounts(DST_PROGRAM_ID))
+    .map((account) => {
+      const data = dstInfoParser.parse(Buffer.from(account.account.data));
+      return {
+        address: account.pubkey,
+        data: data,
+      };
+    })
+    .map((account) => {
+      const dstAddress = findDSTInfoAddress(account.data.tokenMint);
+      const directorAddress = findDirectorAddress(dstAddress);
+      return { ...account, directorAddress };
+    });
+
+  // batch call on director addresses
+  const directors = (
+    await connection.getMultipleAccountsInfo(
+      info.map((account) => account.directorAddress)
     )
-  ).json();
-  const pools = poolsData.pools;
-
-  const data: Record<string, any> = {};
-
-  // For each pool, get the latest full candle and the fees
-  for (const pool of pools) {
-    const lpTokenAddress = pool.lpToken.address;
-    console.log(lpTokenAddress);
-
-    const connection = new Connection(process.env.RPC_URL!);
-    const metadata = await getTokenMetadataFromChain(
-      connection,
-      new PublicKey(lpTokenAddress)
-    );
-    console.log(metadata);
-
-    if (!metadata) {
-      continue;
+  ).map((account, i) => {
+    if (!account) {
+      return undefined;
     }
 
-    const token = {
-      address: lpTokenAddress,
-      name: pool.lpToken.name,
-      symbol: pool.lpToken.symbol,
-      decimals: metadata?.decimals,
-      chainId: 101,
-      logoURI: metadata?.image,
+    const data = directorParser.parse(Buffer.from(account.data));
+    return {
+      address: info[i].directorAddress,
+      data: data,
     };
+  });
 
-    data[token.address] = token;
-  }
+  // Merge arrays
+  const merged = info.map((account) => {
+    const director = directors.find(
+      (director) =>
+        director?.address.toString() === account.directorAddress.toString()
+    );
+    return { ...account, director: director?.data };
+  });
 
+  // Metadata append
+  const data = await Promise.all(
+    merged.map(async (account) => {
+      const metadata = await getTokenMetadataFromChain(
+        connection,
+        account.data.tokenMint
+      );
+      return { ...account, metadata: { ...metadata, createdOn: undefined } };
+    })
+  );
+
+  return JSON.stringify(
+    data,
+    (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
+    2
+  );
+};
+
+const run = async () => {
+  const connection = new Connection(process.env.RPC_URL!);
+  const data = await getLstList(connection);
   console.log(data);
 
-  // Save in github with the unix timestamp as the filename
   await saveDataToGitHub(data, Date.now());
 };
 
