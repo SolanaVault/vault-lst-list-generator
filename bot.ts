@@ -151,9 +151,8 @@ const getLstList = async (connection: Connection) => {
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
   const data = await getLstList(connection);
-  console.log(data);
 
-  // await saveDataToGitHub(data, Date.now());
+  await saveDataToGitHub(data, Date.now());
 };
 
 run();
