@@ -1,19 +1,23 @@
 {
-  "name": "tribeca-epoch-crank",
+  "name": "vault-lst-list-generator",
   "packageManager": "yarn@1.22.22",
   "devDependencies": {
     "@types/node": "^22.4.1",
     "tsx": "^4.19.1",
     "typescript": "^5.5.4"
   },
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "local": "tsx --env-file=.env bot.ts",
     "start": "tsx bot.ts"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.30.0",
     "@octokit/rest": "^21.0.2",
     "@solana/web3.js": "^1.98.0",
+    "@thevault/directed-stake": "^1.1.2",
+    "@thevault/dst": "^2.0.2",
+    "bn.js": "^5.2.1",
     "p-limit": "^6.2.0"
   }
 }
