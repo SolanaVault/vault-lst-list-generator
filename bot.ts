@@ -16,8 +16,8 @@ const saveDataToGitHub = async (data: string, timestamp: number) => {
     auth: process.env.G_TOKEN,
   });
 
-  const owner = "SolanaVaults";
-  const repo = "lst-list-generator";
+  const owner = "SolanaVault";
+  const repo = "vault-lst-list-generator";
   const path = `lst-list.json`;
   const content = Buffer.from(data).toString("base64");
 
