@@ -3,13 +3,10 @@ import { getMetadataAccount } from "./helpers/metadata";
 import { decodeMetadata } from "./helpers/metadata";
 import { Connection } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
-import {
-  DST_PROGRAM_ID,
-  dstInfoParser,
-  findDSTInfoAddress,
-} from "@thevault/dst";
+import { DST_PROGRAM_ID, findDSTInfoAddress } from "@thevault/dst";
 import _ from "lodash";
 import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
+import { dstInfoParser } from "./helpers/dstInfoParser";
 
 const saveDataToGitHub = async (data: string, timestamp: number) => {
   const octokit = new Octokit({
