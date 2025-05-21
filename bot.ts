@@ -49,10 +49,26 @@ const saveDataToGitHub = async (
   }
 };
 
+let tokenListCache: any;
+const getOldTokenMetadata = async () => {
+  if (tokenListCache) {
+    return tokenListCache;
+  }
+
+  const tokenList = await fetch(
+    "https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json"
+  );
+  const tokenListData = await tokenList.json();
+  tokenListCache = tokenListData;
+  return tokenListData;
+};
+
 const getTokenMetadatasFromChain = async (
   connection: Connection,
   mints: PublicKey[]
 ) => {
+  const oldMetadata = await getOldTokenMetadata();
+
   const chunks = _.chunk(mints, 100);
   const results = [];
   for (const chunk of chunks) {
@@ -83,7 +99,28 @@ const getTokenMetadatasFromChain = async (
               decimals: info?.data?.parsed?.info?.decimals,
             };
           } catch (e) {
-            // Do nothing
+            // Try old metadata
+            const _oldMetadata = oldMetadata.tokens.find(
+              (token: any) => token.address === chunk[_index].toString()
+            ) as {
+              chainId: number;
+              address: string;
+              symbol: string;
+              name: string;
+              decimals: number;
+              logoURI: string;
+              tags: string[];
+              extensions: {
+                facebook: string;
+                twitter: string;
+                website: string;
+              };
+            };
+            if (_oldMetadata) {
+              return {
+                ..._oldMetadata,
+              };
+            }
           }
         })
       );
@@ -95,6 +132,7 @@ const getTokenMetadatasFromChain = async (
       // return null;
     }
   }
+
   return results;
 };
 
