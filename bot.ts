@@ -7,15 +7,20 @@ import { DST_PROGRAM_ID, findDSTInfoAddress } from "@thevault/dst";
 import _ from "lodash";
 import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
 import { dstInfoParser } from "./helpers/dstInfoParser";
+import { SANCTUM_PROGRAM_ID, STAKE_POOL_PROGRAM_ID } from "./constants";
+import { getStakePoolAccounts, StakePool } from "@solana/spl-stake-pool";
 
-const saveDataToGitHub = async (data: string, timestamp: number) => {
+const saveDataToGitHub = async (
+  path: string,
+  data: string,
+  timestamp: number
+) => {
   const octokit = new Octokit({
     auth: process.env.G_TOKEN,
   });
 
   const owner = "SolanaVault";
   const repo = "vault-lst-list-generator";
-  const path = `lst-list.json`;
   const content = Buffer.from(data).toString("base64");
 
   try {
@@ -48,39 +53,49 @@ const getTokenMetadatasFromChain = async (
   connection: Connection,
   mints: PublicKey[]
 ) => {
-  try {
-    const metadataAccounts = mints.map((_mint) =>
-      getMetadataAccount(_mint.toString())
-    );
-    const metadataAccountInfos = await connection.getMultipleAccountsInfo(
-      metadataAccounts.map(
-        (_metadataAccount) => new PublicKey(_metadataAccount)
-      )
-    );
-    const infos = await connection.getMultipleParsedAccounts(mints);
+  const chunks = _.chunk(mints, 100);
+  const results = [];
+  for (const chunk of chunks) {
+    try {
+      const metadataAccounts = chunk.map((_mint) =>
+        getMetadataAccount(_mint.toString())
+      );
+      const metadataAccountInfos = await connection.getMultipleAccountsInfo(
+        metadataAccounts.map(
+          (_metadataAccount) => new PublicKey(_metadataAccount)
+        )
+      );
+      const infos = await connection.getMultipleParsedAccounts(chunk);
 
-    // finally, decode metadata
-    const result = await Promise.all(
-      metadataAccountInfos.map(async (_metadataAccountInfo, _index) => {
-        const data = decodeMetadata(_metadataAccountInfo!.data);
-        const info = infos.value[_index];
-        const meta = (await (await fetch(data.data.uri)).json()) as {
-          image: string;
-        };
-        return {
-          ...data,
-          ...meta,
-          // @ts-expect-error ignore
-          decimals: info?.data.parsed.info.decimals,
-        };
-      })
-    );
-    console.log(result);
-    return result;
-  } catch (e) {
-    console.error(e);
-    return null;
+      // finally, decode metadata
+      const result = await Promise.all(
+        metadataAccountInfos.map(async (_metadataAccountInfo, _index) => {
+          try {
+            const data = decodeMetadata(_metadataAccountInfo!.data);
+            const info = infos.value[_index];
+            const meta = (await (await fetch(data.data.uri)).json()) as {
+              image: string;
+            };
+            return {
+              ...data,
+              ...meta,
+              // @ts-expect-error ignore
+              decimals: info?.data?.parsed?.info?.decimals,
+            };
+          } catch (e) {
+            // Do nothing
+          }
+        })
+      );
+      console.log(result);
+      results.push(...result);
+    } catch (e) {
+      console.error("Metadata error");
+      console.error(e);
+      // return null;
+    }
   }
+  return results;
 };
 
 const getLstList = async (connection: Connection) => {
@@ -145,11 +160,58 @@ const getLstList = async (connection: Connection) => {
   );
 };
 
+const getStakePoolProgramLsts = async (
+  connection: Connection,
+  stakePoolProgramId: PublicKey
+) => {
+  // @ts-expect-error ignore
+  const data = await getStakePoolAccounts(connection, stakePoolProgramId);
+
+  if (!data) {
+    return [];
+  }
+
+  const lsts = data
+    .map((stakePool) => stakePool?.account.data)
+    .filter((account) => account?.accountType === 1) as StakePool[];
+
+  // Append metadata for each
+  const mints = lsts.map((lst) => lst.poolMint);
+  const metadata = await getTokenMetadatasFromChain(connection, mints);
+
+  return lsts.map((lst, index) => {
+    return { ...lst, metadata: metadata?.[index] };
+  });
+};
+
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
-  const data = await getLstList(connection);
 
-  await saveDataToGitHub(data, Date.now());
+  // Get all DSTs
+  const data = await getLstList(connection);
+  await saveDataToGitHub("lst-list.json", data, Date.now());
+
+  // Get all Stake pool program LSTs
+  const stakePoolProgramLsts = await getStakePoolProgramLsts(
+    connection,
+    STAKE_POOL_PROGRAM_ID
+  );
+  await saveDataToGitHub(
+    "stakepool-lists.json",
+    JSON.stringify(stakePoolProgramLsts),
+    Date.now()
+  );
+
+  // Get all sanctum program LSTs
+  const sanctumProgramLsts = await getStakePoolProgramLsts(
+    connection,
+    SANCTUM_PROGRAM_ID
+  );
+  await saveDataToGitHub(
+    "sanctum-lists.json",
+    JSON.stringify(sanctumProgramLsts),
+    Date.now()
+  );
 };
 
 run();
