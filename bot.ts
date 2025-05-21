@@ -172,7 +172,11 @@ const getStakePoolProgramLsts = async (
   }
 
   const lsts = data
-    .map((stakePool) => stakePool?.account.data)
+    .map((stakePool) => ({
+      accountType: 0,
+      ...stakePool?.account.data,
+      stakePool: stakePool?.pubkey,
+    }))
     .filter((account) => account?.accountType === 1) as StakePool[];
 
   // Append metadata for each
