@@ -15,11 +15,17 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Set up Solana CLI
+      - name: Save validator info
         run: |
           sh -c "$(curl -sSfL https://release.anza.xyz/v2.2.14/install)"
           export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
-          solana --version
+          solana validators --output json > validators.json
+          solana validator-info get --output json-compact > validatorInfo.json
+          git config user.name "Vault bot"
+          git config user.email "bot@vault.finance"
+          git add .
+          git commit -m "Update Validator info with latest data"
+          git push
 
     #   - name: Update validator info
     #     id: update-validator-info
