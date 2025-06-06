@@ -21,6 +21,7 @@ jobs:
           export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
           solana validators --output json > validators.json
           solana validator-info get --output json-compact > validatorInfo.json
+          curl -s https://kobe.mainnet.jito.network/api/v1/validators > jitoValidators.json
           git config user.name "Vault bot"
           git config user.email "bot@vault.finance"
           git add .
