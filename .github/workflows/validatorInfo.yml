@@ -1,0 +1,29 @@
+name: Update validator info
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update-validator-info:
+    name: Update validator info
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v2.2.15/install)"
+          export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
+          solana --version
+
+    #   - name: Update validator info
+    #     id: update-validator-info
+    #     env:
+    #       RPC_URL: ${{ secrets.RPC_URL }}
+    #       G_TOKEN: ${{ secrets.G_TOKEN }}
+    #     run: yarn start
