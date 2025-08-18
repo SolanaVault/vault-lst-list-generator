@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import { getMetadataAccount } from "./helpers/metadata";
 import { decodeMetadata } from "./helpers/metadata";
-import { Connection } from "@solana/web3.js";
+import { Connection, Keypair, StakeProgram } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 import { DST_PROGRAM_ID, findDSTInfoAddress } from "@thevault/dst";
 import _ from "lodash";
@@ -9,45 +9,15 @@ import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
 import { dstInfoParser } from "./helpers/dstInfoParser";
 import { SANCTUM_PROGRAM_ID, STAKE_POOL_PROGRAM_ID } from "./constants";
 import { getStakePoolAccounts, StakePool } from "@solana/spl-stake-pool";
+import { saveDataToGitHub } from "./helpers/github";
+import BigNumber from "bignumber.js";
+import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
+import { LiquidUnstaker } from "./helpers/liquidUnstaker";
+import IDL from "./helpers/liquidUnstaker.json";
 
-const saveDataToGitHub = async (
-  path: string,
-  data: string,
-  timestamp: number
-) => {
-  const octokit = new Octokit({
-    auth: process.env.G_TOKEN,
-  });
-
-  const owner = "SolanaVault";
-  const repo = "vault-lst-list-generator";
-  const content = Buffer.from(data).toString("base64");
-
-  try {
-    // Get the SHA of the current file
-    const result = await octokit.request(
-      `GET /repos/${owner}/${repo}/contents/${path}`,
-      {
-        owner,
-        repo,
-        file_path: path,
-        branch: "main",
-      }
-    );
-
-    await octokit.repos.createOrUpdateFileContents({
-      owner,
-      repo,
-      path,
-      message: `Add data for timestamp ${timestamp}`,
-      content,
-      sha: result.data.sha,
-    });
-    console.log(`Data saved to GitHub at ${path}`);
-  } catch (error) {
-    console.error(`Failed to save data to GitHub: ${error}`);
-  }
-};
+const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
+  "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
+);
 
 let tokenListCache: any;
 const getOldTokenMetadata = async () => {
@@ -226,34 +196,117 @@ const getStakePoolProgramLsts = async (
   });
 };
 
+const getVLPPrice = async (connection: Connection) => {
+  const anchorWallet = new AnchorProvider(
+    connection,
+    new Wallet(new Keypair())
+  );
+  const program = new Program<LiquidUnstaker>(IDL as LiquidUnstaker, {
+    ...anchorWallet,
+    connection,
+  });
+
+  const [solVault] = PublicKey.findProgramAddressSync(
+    [Buffer.from("sol_vault"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
+    program.programId
+  );
+
+  const [lpMintPubkey] = PublicKey.findProgramAddressSync(
+    [Buffer.from("lp_mint"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
+    program.programId
+  );
+
+  const data = await program.account.pool.fetch(LIQUID_UNSTAKER_POOL_ACCOUNT);
+
+  const solVaultBalance = await connection.getBalance(solVault);
+  const stakeAccounts = await connection.getParsedProgramAccounts(
+    StakeProgram.programId,
+    {
+      commitment: "confirmed",
+      filters: [
+        {
+          memcmp: {
+            offset: 44,
+            bytes: LIQUID_UNSTAKER_POOL_ACCOUNT.toBase58(),
+          },
+        },
+      ],
+    }
+  );
+
+  const balance =
+    BigInt(solVaultBalance) +
+    BigInt(
+      stakeAccounts
+        .reduce(
+          (acc, stakeAccount) =>
+            acc.plus(
+              new BigNumber(
+                // @ts-expect-error cannot find the types
+                // eslint-disable-next-line
+                stakeAccount.account.data.parsed.info.stake.delegation.stake
+              )
+            ),
+          new BigNumber(0)
+        )
+        .toString()
+    );
+
+  return new BigNumber(balance ?? 0)
+    .div(data.totalLpTokens.toString() ?? 0)
+    .toFixed(8);
+};
+
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
 
+  const files = [];
+
+  // Get VLP price
+  console.log("Getting VLP price");
+  const history = await fetch(
+    "https://raw.githubusercontent.com/SolanaVault/vault-lst-list-generator/main/vlp-price.json"
+  );
+  const historyData = await history.json();
+  const vlpPrice = await getVLPPrice(connection);
+  historyData[new Date().toISOString().split("T")[0]] = Number(vlpPrice);
+  files.push({
+    path: "vlp-price.json",
+    content: JSON.stringify(historyData, null, 2),
+  });
+
   // Get all DSTs
+  console.log("Getting DSTs");
   const data = await getLstList(connection);
-  await saveDataToGitHub("lst-list.json", data, Date.now());
+  files.push({
+    path: "lst-list.json",
+    content: data,
+  });
 
   // Get all Stake pool program LSTs
+  console.log("Getting Stake pool program LSTs");
   const stakePoolProgramLsts = await getStakePoolProgramLsts(
     connection,
     STAKE_POOL_PROGRAM_ID
   );
-  await saveDataToGitHub(
-    "stakepool-lists.json",
-    JSON.stringify(stakePoolProgramLsts),
-    Date.now()
-  );
+  files.push({
+    path: "stakepool-lists.json",
+    content: JSON.stringify(stakePoolProgramLsts, null, 2),
+  });
 
   // Get all sanctum program LSTs
+  console.log("Getting Sanctum program LSTs");
   const sanctumProgramLsts = await getStakePoolProgramLsts(
     connection,
     SANCTUM_PROGRAM_ID
   );
-  await saveDataToGitHub(
-    "sanctum-lists.json",
-    JSON.stringify(sanctumProgramLsts),
-    Date.now()
-  );
+  files.push({
+    path: "sanctum-lists.json",
+    content: JSON.stringify(sanctumProgramLsts, null, 2),
+  });
+
+  console.log("Saving data to GitHub");
+  await saveDataToGitHub(files);
 };
 
 run();
