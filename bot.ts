@@ -206,6 +206,7 @@ const getVLPPrice = async (connection: Connection) => {
     connection,
   });
 
+  /*
   const [solVault] = PublicKey.findProgramAddressSync(
     [Buffer.from("sol_vault"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
     program.programId
@@ -214,11 +215,11 @@ const getVLPPrice = async (connection: Connection) => {
   const [lpMintPubkey] = PublicKey.findProgramAddressSync(
     [Buffer.from("lp_mint"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
     program.programId
-  );
+  );*/
 
   const data = await program.account.pool.fetch(LIQUID_UNSTAKER_POOL_ACCOUNT);
 
-  const solVaultBalance = await connection.getBalance(solVault);
+  /*const solVaultBalance = await connection.getBalance(solVault);
   const stakeAccounts = await connection.getParsedProgramAccounts(
     StakeProgram.programId,
     {
@@ -251,7 +252,8 @@ const getVLPPrice = async (connection: Connection) => {
         )
         .toString()
     );
-
+  */
+  const balance = data.solVaultLamports.toNumber() + data.totalDeactivatingStake.toNumber();
   return new BigNumber(balance ?? 0)
     .div(data.totalLpTokens.toString() ?? 0)
     .toFixed(8);
