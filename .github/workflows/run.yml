@@ -31,4 +31,5 @@ jobs:
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
           G_TOKEN: ${{ secrets.G_TOKEN }}
+          DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
         run: yarn start

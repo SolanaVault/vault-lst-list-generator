@@ -196,67 +196,20 @@ const getStakePoolProgramLsts = async (
   });
 };
 
-const getVLPPrice = async (connection: Connection) => {
-  const anchorWallet = new AnchorProvider(
-    connection,
-    new Wallet(new Keypair())
-  );
-  const program = new Program<LiquidUnstaker>(IDL as LiquidUnstaker, {
-    ...anchorWallet,
-    connection,
-  });
-
-  /*
-  const [solVault] = PublicKey.findProgramAddressSync(
-    [Buffer.from("sol_vault"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
-    program.programId
-  );
-
-  const [lpMintPubkey] = PublicKey.findProgramAddressSync(
-    [Buffer.from("lp_mint"), LIQUID_UNSTAKER_POOL_ACCOUNT.toBuffer()],
-    program.programId
-  );*/
-
-  const data = await program.account.pool.fetch(LIQUID_UNSTAKER_POOL_ACCOUNT);
-
-  /*const solVaultBalance = await connection.getBalance(solVault);
-  const stakeAccounts = await connection.getParsedProgramAccounts(
-    StakeProgram.programId,
+const getVLPAPY = async () => {
+  const response = await fetch(
+    `https://api.dune.com/api/v1/query/5304965/results?limit=1000`,
     {
-      commitment: "confirmed",
-      filters: [
-        {
-          memcmp: {
-            offset: 44,
-            bytes: LIQUID_UNSTAKER_POOL_ACCOUNT.toBase58(),
-          },
-        },
-      ],
+      headers: {
+        "x-dune-api-key": process.env.DUNE_API_KEY!,
+      },
     }
   );
-
-  const balance =
-    BigInt(solVaultBalance) +
-    BigInt(
-      stakeAccounts
-        .reduce(
-          (acc, stakeAccount) =>
-            acc.plus(
-              new BigNumber(
-                // @ts-expect-error cannot find the types
-                // eslint-disable-next-line
-                stakeAccount.account.data.parsed.info.stake.delegation.stake
-              )
-            ),
-          new BigNumber(0)
-        )
-        .toString()
-    );
-  */
-  const balance = data.solVaultLamports.toNumber() + data.totalDeactivatingStake.toNumber();
-  return new BigNumber(balance ?? 0)
-    .div(data.totalLpTokens.toString() ?? 0)
-    .toFixed(8);
+  const data = await response.json();
+  const row = data.result.rows.sort(
+    (a: any, b: any) => b.block_slot - a.block_slot
+  )[0];
+  return row.vlp_7_days_apy as number;
 };
 
 const run = async () => {
@@ -265,16 +218,11 @@ const run = async () => {
   const files = [];
 
   // Get VLP price
-  console.log("Getting VLP price");
-  const history = await fetch(
-    "https://raw.githubusercontent.com/SolanaVault/vault-lst-list-generator/main/vlp-price.json"
-  );
-  const historyData = await history.json();
-  const vlpPrice = await getVLPPrice(connection);
-  historyData[new Date().toISOString().split("T")[0]] = Number(vlpPrice);
+  console.log("Getting VLP apy");
+  const vlpApy = await getVLPAPY();
   files.push({
-    path: "vlp-price.json",
-    content: JSON.stringify(historyData, null, 2),
+    path: "vlp-apy.json",
+    content: JSON.stringify({ apy: vlpApy }, null, 2),
   });
 
   // Get all DSTs
