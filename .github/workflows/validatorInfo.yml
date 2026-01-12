@@ -22,6 +22,15 @@ jobs:
           solana validators --output json > validators.json
           solana validator-info get --output json-compact > validatorInfo.json
           curl -s https://kobe.mainnet.jito.network/api/v1/validators > jitoValidators.json
+
+          # Validate jitoValidators.json has a validators key
+          if ! jq -e '.validators' jitoValidators.json > /dev/null 2>&1; then
+            echo "jitoValidators.json does not have a 'validators' key. Skipping commit for this file."
+            rm jitoValidators.json
+          else
+            echo "jitoValidators.json is valid. Will commit."
+          fi
+
           git config user.name "Vault bot"
           git config user.email "bot@vault.finance"
           git add .
