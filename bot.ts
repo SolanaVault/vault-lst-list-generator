@@ -209,7 +209,10 @@ const getVLPAPY = async () => {
   const row = data.result.rows.sort(
     (a: any, b: any) => b.block_slot - a.block_slot
   )[0];
-  return row.vlp_7_days_apy as number;
+  return {
+    apy: row.vlp_7_days_apy as number,
+    fullResponse: data,
+  };
 };
 
 const run = async () => {
@@ -219,10 +222,21 @@ const run = async () => {
 
   // Get VLP price
   console.log("Getting VLP apy");
-  const vlpApy = await getVLPAPY();
+  const vlpData = await getVLPAPY();
   files.push({
     path: "vlp-apy.json",
-    content: JSON.stringify({ apy: vlpApy }, null, 2),
+    content: JSON.stringify({ apy: vlpData.apy }, null, 2),
+  });
+  files.push({
+    path: "dune.json",
+    content: JSON.stringify(
+      {
+        timestamp: new Date().toISOString(),
+        ...vlpData.fullResponse,
+      },
+      null,
+      2
+    ),
   });
 
   // Get all DSTs
