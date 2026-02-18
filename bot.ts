@@ -215,6 +215,21 @@ const getVLPAPY = async () => {
   };
 };
 
+const getStakePoolAPY = async () => {
+  const response = await fetch(
+    `https://api.dune.com/api/v1/query/3936523/results?limit=1000`,
+    {
+      headers: {
+        "x-dune-api-key": process.env.DUNE_API_KEY!,
+      },
+    }
+  );
+  const data = await response.json();
+  return {
+    fullResponse: data,
+  };
+};
+
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
 
@@ -233,6 +248,21 @@ const run = async () => {
       {
         timestamp: new Date().toISOString(),
         ...vlpData.fullResponse,
+      },
+      null,
+      2
+    ),
+  });
+
+  // Get Stake Pool APY
+  console.log("Getting Stake Pool APY");
+  const stakePoolData = await getStakePoolAPY();
+  files.push({
+    path: "dune-stakepool.json",
+    content: JSON.stringify(
+      {
+        timestamp: new Date().toISOString(),
+        ...stakePoolData.fullResponse,
       },
       null,
       2
