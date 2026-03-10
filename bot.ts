@@ -192,7 +192,7 @@ const getStakePoolProgramLsts = async (
   const metadata = await getTokenMetadatasFromChain(connection, mints);
 
   return lsts.map((lst, index) => {
-    return { ...lst, metadata: metadata?.[index] };
+    return { ...lst, programId: stakePoolProgramId.toString(), metadata: metadata?.[index] };
   });
 };
 
