@@ -241,37 +241,45 @@ const run = async () => {
 
   // Get VLP price
   console.log("Getting VLP apy");
-  const vlpData = await getVLPAPY();
-  files.push({
-    path: "vlp-apy.json",
-    content: JSON.stringify({ apy: vlpData.apy }, null, 2),
-  });
-  files.push({
-    path: "dune.json",
-    content: JSON.stringify(
-      {
-        timestamp: new Date().toISOString(),
-        ...vlpData.fullResponse,
-      },
-      null,
-      2
-    ),
-  });
+  try {
+    const vlpData = await getVLPAPY();
+    files.push({
+      path: "vlp-apy.json",
+      content: JSON.stringify({ apy: vlpData.apy }, null, 2),
+    });
+    files.push({
+      path: "dune.json",
+      content: JSON.stringify(
+        {
+          timestamp: new Date().toISOString(),
+          ...vlpData.fullResponse,
+        },
+        null,
+        2
+      ),
+    });
+  } catch (e) {
+    console.error("Skipping VLP APY update:", e);
+  }
 
   // Get Stake Pool APY
   console.log("Getting Stake Pool APY");
-  const stakePoolData = await getStakePoolAPY();
-  files.push({
-    path: "dune-stakepool.json",
-    content: JSON.stringify(
-      {
-        timestamp: new Date().toISOString(),
-        ...stakePoolData.fullResponse,
-      },
-      null,
-      2
-    ),
-  });
+  try {
+    const stakePoolData = await getStakePoolAPY();
+    files.push({
+      path: "dune-stakepool.json",
+      content: JSON.stringify(
+        {
+          timestamp: new Date().toISOString(),
+          ...stakePoolData.fullResponse,
+        },
+        null,
+        2
+      ),
+    });
+  } catch (e) {
+    console.error("Skipping Stake Pool APY update:", e);
+  }
 
   // Get all DSTs
   console.log("Getting DSTs");
