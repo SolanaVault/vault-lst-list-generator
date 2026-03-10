@@ -206,6 +206,10 @@ const getVLPAPY = async () => {
     }
   );
   const data = await response.json();
+  if (!data.result?.rows) {
+    console.error("Dune VLP APY response:", JSON.stringify(data, null, 2));
+    throw new Error("Dune VLP APY query returned no results");
+  }
   const row = data.result.rows.sort(
     (a: any, b: any) => b.block_slot - a.block_slot
   )[0];
