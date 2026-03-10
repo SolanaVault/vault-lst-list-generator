@@ -7,7 +7,7 @@ import { DST_PROGRAM_ID, findDSTInfoAddress } from "@thevault/dst";
 import _ from "lodash";
 import { directorParser, findDirectorAddress } from "@thevault/directed-stake";
 import { dstInfoParser } from "./helpers/dstInfoParser";
-import { SANCTUM_PROGRAM_ID, STAKE_POOL_PROGRAM_ID } from "./constants";
+import { SANCTUM_PROGRAM_ID, SANCTUM_SPL_MULTI_PROGRAM_ID, STAKE_POOL_PROGRAM_ID } from "./constants";
 import { getStakePoolAccounts, StakePool } from "@solana/spl-stake-pool";
 import { saveDataToGitHub } from "./helpers/github";
 import BigNumber from "bignumber.js";
@@ -294,9 +294,17 @@ const run = async () => {
     connection,
     SANCTUM_PROGRAM_ID
   );
+
+  // Get all Sanctum SPL Multi program LSTs (e.g. hyloSOL)
+  console.log("Getting Sanctum SPL Multi program LSTs");
+  const sanctumSplMultiLsts = await getStakePoolProgramLsts(
+    connection,
+    SANCTUM_SPL_MULTI_PROGRAM_ID
+  );
+
   files.push({
     path: "sanctum-lists.json",
-    content: JSON.stringify(sanctumProgramLsts, null, 2),
+    content: JSON.stringify([...sanctumProgramLsts, ...sanctumSplMultiLsts], null, 2),
   });
 
   console.log("Saving data to GitHub");
