@@ -21,14 +21,15 @@ jobs:
           export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
           solana validators --output json > validators.json
           solana validator-info get --output json-compact > validatorInfo.json
-          curl -s https://kobe.mainnet.jito.network/api/v1/validators > jitoValidators.json
+          curl -s https://kobe.mainnet.jito.network/api/v1/validators > jitoValidators.json.new
 
-          # Validate jitoValidators.json has a validators key
-          if ! jq -e '.validators' jitoValidators.json > /dev/null 2>&1; then
-            echo "jitoValidators.json does not have a 'validators' key. Skipping commit for this file."
-            rm jitoValidators.json
-          else
+          # Only replace jitoValidators.json if the new payload has a validators key
+          if jq -e '.validators' jitoValidators.json.new > /dev/null 2>&1; then
             echo "jitoValidators.json is valid. Will commit."
+            mv jitoValidators.json.new jitoValidators.json
+          else
+            echo "jitoValidators.json does not have a 'validators' key. Keeping previous version."
+            rm jitoValidators.json.new
           fi
 
           git config user.name "Vault bot"
