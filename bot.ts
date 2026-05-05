@@ -198,7 +198,7 @@ const getStakePoolProgramLsts = async (
 
 const getVLPAPY = async () => {
   const response = await fetch(
-    `https://api.dune.com/api/v1/query/5304965/results?limit=1000`,
+    `https://api.dune.com/api/v1/query/5304965/results?limit=1000&sort_by=block_slot+desc`,
     {
       headers: {
         "x-dune-api-key": process.env.DUNE_API_KEY!,
@@ -221,7 +221,7 @@ const getVLPAPY = async () => {
 
 const getStakePoolAPY = async () => {
   const response = await fetch(
-    `https://api.dune.com/api/v1/query/3936523/results?limit=1000`,
+    `https://api.dune.com/api/v1/query/3936523/results?limit=1000&sort_by=block_date+desc`,
     {
       headers: {
         "x-dune-api-key": process.env.DUNE_API_KEY!,
