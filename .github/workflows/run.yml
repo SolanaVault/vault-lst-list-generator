@@ -26,6 +26,9 @@ jobs:
         id: yarn-ci
         run: yarn install
 
+      - name: Validate generator
+        run: yarn test
+
       - name: Run bot
         id: run-bot
         env:

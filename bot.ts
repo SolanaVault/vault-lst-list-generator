@@ -14,6 +14,7 @@ import BigNumber from "bignumber.js";
 import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
 import { LiquidUnstaker } from "./helpers/liquidUnstaker";
 import IDL from "./helpers/liquidUnstaker.json";
+import { isSafeHttpsUrl } from "./helpers/safeUrl";
 
 const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
   "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
@@ -40,7 +41,7 @@ const getTokenMetadatasFromChain = async (
   const oldMetadata = await getOldTokenMetadata();
 
   const chunks = _.chunk(mints, 100);
-  const results = [];
+  const results: (Record<string, unknown> | undefined)[] = [];
   for (const chunk of chunks) {
     try {
       const metadataAccounts = chunk.map((_mint) =>
@@ -59,12 +60,34 @@ const getTokenMetadatasFromChain = async (
           try {
             const data = decodeMetadata(_metadataAccountInfo!.data);
             const info = infos.value[_index];
-            const meta = (await (await fetch(data.data.uri)).json()) as {
-              image: string;
-            };
+            if (!isSafeHttpsUrl(data.data.uri)) {
+              console.warn(
+                `Skipping metadata for ${chunk[_index].toString()}: unsafe URI`
+              );
+              return undefined;
+            }
+
+            const response = await fetch(data.data.uri, {
+              redirect: "error",
+              signal: AbortSignal.timeout(10_000),
+            });
+            if (!response.ok) {
+              throw new Error(`Metadata request failed: ${response.status}`);
+            }
+
+            const meta = (await response.json()) as Record<string, unknown>;
+            if (!isSafeHttpsUrl(meta.image)) {
+              console.warn(
+                `Skipping metadata for ${chunk[_index].toString()}: invalid image URL`
+              );
+              return undefined;
+            }
+
             return {
               ...data,
               ...meta,
+              data: data.data,
+              image: meta.image,
               // @ts-expect-error ignore
               decimals: info?.data?.parsed?.info?.decimals,
             };
@@ -86,9 +109,10 @@ const getTokenMetadatasFromChain = async (
                 website: string;
               };
             };
-            if (_oldMetadata) {
+            if (_oldMetadata && isSafeHttpsUrl(_oldMetadata.logoURI)) {
               return {
                 ..._oldMetadata,
+                image: _oldMetadata.logoURI,
               };
             }
           }
@@ -139,12 +163,19 @@ const getLstList = async (connection: Connection) => {
   });
 
   // Merge arrays
-  const merged = info.map((account) => {
+  const merged = info.flatMap((account) => {
     const director = directors.find(
       (director) =>
         director?.address.toString() === account.directorAddress.toString()
     );
-    return { ...account, director: director?.data };
+    if (!director) {
+      console.warn(
+        `Skipping DST ${account.address.toString()}: director account not found`
+      );
+      return [];
+    }
+
+    return [{ ...account, director: director.data }];
   });
 
   // Metadata append
@@ -152,11 +183,21 @@ const getLstList = async (connection: Connection) => {
     _.chunk(merged, 100).map(async (accounts) => {
       const mints = accounts.map((account) => account.data.tokenMint);
       const metadata = await getTokenMetadatasFromChain(connection, mints);
-      return accounts.map((account, index) => {
-        return {
-          ...account,
-          metadata: { ...metadata?.[index], createdOn: undefined },
-        };
+      return accounts.flatMap((account, index) => {
+        const tokenMetadata = metadata[index];
+        if (!tokenMetadata) {
+          console.warn(
+            `Skipping DST ${account.address.toString()}: safe metadata not found`
+          );
+          return [];
+        }
+
+        return [
+          {
+            ...account,
+            metadata: { ...tokenMetadata, createdOn: undefined },
+          },
+        ];
       });
     })
   );
@@ -192,7 +233,11 @@ const getStakePoolProgramLsts = async (
   const metadata = await getTokenMetadatasFromChain(connection, mints);
 
   return lsts.map((lst, index) => {
-    return { ...lst, programId: stakePoolProgramId.toString(), metadata: metadata?.[index] };
+    return {
+      ...lst,
+      programId: stakePoolProgramId.toString(),
+      metadata: metadata[index],
+    };
   });
 };
 

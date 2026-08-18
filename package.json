@@ -10,7 +10,8 @@
   "type": "commonjs",
   "scripts": {
     "local": "tsx --env-file=.env bot.ts",
-    "start": "tsx bot.ts"
+    "start": "tsx bot.ts",
+    "test": "node --import tsx --test helpers/safeUrl.test.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.0",
