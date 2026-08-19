@@ -9,6 +9,8 @@ jobs:
   update-validator-info:
     name: Update validator info
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -37,10 +39,3 @@ jobs:
           git add .
           git commit -m "Update Validator info with latest data"
           git push
-
-    #   - name: Update validator info
-    #     id: update-validator-info
-    #     env:
-    #       RPC_URL: ${{ secrets.RPC_URL }}
-    #       G_TOKEN: ${{ secrets.G_TOKEN }}
-    #     run: yarn start

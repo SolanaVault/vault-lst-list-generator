@@ -9,11 +9,15 @@ jobs:
   run-crank:
     name: Fetch data
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         id: setup-node
@@ -33,6 +37,6 @@ jobs:
         id: run-bot
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
-          G_TOKEN: ${{ secrets.G_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
         run: yarn start

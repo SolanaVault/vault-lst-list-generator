@@ -10,8 +10,13 @@ export const saveDataToGitHub = async (
     content: string;
   }[]
 ) => {
+  const githubToken = process.env.GITHUB_TOKEN;
+  if (!githubToken) {
+    throw new Error("GITHUB_TOKEN is not set");
+  }
+
   const octokit = new OctokitClass({
-    auth: process.env.G_TOKEN,
+    auth: githubToken,
   });
 
   const owner = "SolanaVault";
@@ -38,5 +43,6 @@ export const saveDataToGitHub = async (
     console.log(`Data saved to GitHub at ${files[0].path}`);
   } catch (error) {
     console.error(`Failed to save data to GitHub: ${error}`);
+    throw error;
   }
 };
