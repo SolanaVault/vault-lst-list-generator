@@ -15,15 +15,27 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
-      - name: Save validator info
+      - name: Install Agave CLI
         run: |
-          sh -c "$(curl -sSfL https://release.anza.xyz/v2.2.14/install)"
-          export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
+          archive="$RUNNER_TEMP/solana-release.tar.bz2"
+          curl --proto '=https' --tlsv1.2 --fail --silent --show-error --location \
+            https://github.com/anza-xyz/agave/releases/download/v2.2.14/solana-release-x86_64-unknown-linux-gnu.tar.bz2 \
+            --output "$archive"
+          echo "b5dadeb39ab7f31062c599ead459b9d809dd9d709365df6cb5943828b7693b36  $archive" | sha256sum --check --strict
+          tar -xjf "$archive" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/solana-release/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch validator info
+        run: |
           solana validators --output json > validators.json
           solana validator-info get --output json-compact > validatorInfo.json
-          curl -s https://kobe.mainnet.jito.network/api/v1/validators > jitoValidators.json.new
+          curl --proto '=https' --tlsv1.2 --fail --silent --show-error --location \
+            https://kobe.mainnet.jito.network/api/v1/validators \
+            --output jitoValidators.json.new
 
           # Only replace jitoValidators.json if the new payload has a validators key
           if jq -e '.validators' jitoValidators.json.new > /dev/null 2>&1; then
@@ -34,8 +46,12 @@ jobs:
             rm jitoValidators.json.new
           fi
 
+      - name: Commit and push validator info
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           git config user.name "Vault bot"
           git config user.email "bot@vault.finance"
-          git add .
+          git add validators.json validatorInfo.json jitoValidators.json
           git commit -m "Update Validator info with latest data"
-          git push
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}"

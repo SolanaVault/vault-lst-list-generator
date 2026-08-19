@@ -14,7 +14,7 @@ import BigNumber from "bignumber.js";
 import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
 import { LiquidUnstaker } from "./helpers/liquidUnstaker";
 import IDL from "./helpers/liquidUnstaker.json";
-import { isSafeHttpsUrl } from "./helpers/safeUrl";
+import { fetchSafeJson, isSafeHttpsUrl } from "./helpers/safeUrl";
 
 const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
   "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
@@ -67,15 +67,9 @@ const getTokenMetadatasFromChain = async (
               return undefined;
             }
 
-            const response = await fetch(data.data.uri, {
-              redirect: "error",
-              signal: AbortSignal.timeout(10_000),
-            });
-            if (!response.ok) {
-              throw new Error(`Metadata request failed: ${response.status}`);
-            }
-
-            const meta = (await response.json()) as Record<string, unknown>;
+            const meta = await fetchSafeJson<Record<string, unknown>>(
+              data.data.uri
+            );
             if (!isSafeHttpsUrl(meta.image)) {
               console.warn(
                 `Skipping metadata for ${chunk[_index].toString()}: invalid image URL`
