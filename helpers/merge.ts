@@ -1,6 +1,7 @@
 // Restores token metadata from the previously published data files, so that a
 // run with flaky metadata fetching does not permanently erase metadata that
 // earlier runs had collected.
+import { isSafeHttpsUrl } from "./safeUrl";
 
 type PoolEntry = {
   poolMint?: unknown;
@@ -63,7 +64,13 @@ export const restorePreviousMetadata = async (
 
     const previous = previousMetadata.get(poolMint);
     if (previous) {
-      entry.metadata = previous;
+      const metadata = previous as Record<string, unknown>;
+      // Re-apply the current image policy to restored data: previously
+      // published metadata may predate the safe-URL validation.
+      if ("image" in metadata && !isSafeHttpsUrl(metadata.image)) {
+        delete metadata.image;
+      }
+      entry.metadata = metadata;
       restoredCount++;
     }
   }
