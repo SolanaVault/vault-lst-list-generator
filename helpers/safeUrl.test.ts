@@ -8,6 +8,7 @@ import {
   isPublicIpAddress,
   isSafeHttpsUrl,
   parseJsonBody,
+  validateRedirectTarget,
 } from "./safeUrl";
 
 test("accepts HTTPS URLs with domain names", () => {
@@ -113,10 +114,20 @@ test("accepts bounded JSON response bodies", async () => {
   assert.deepEqual(body, { name: "Vault" });
 });
 
-test("rejects non-JSON and oversized response bodies", async () => {
+test("accepts JSON bodies served with a non-JSON content type", async () => {
+  const body = await parseJsonBody(
+    Readable.from(['{"name":"Vault"}']),
+    "text/plain",
+    undefined
+  );
+
+  assert.deepEqual(body, { name: "Vault" });
+});
+
+test("rejects invalid JSON and oversized response bodies", async () => {
   await assert.rejects(
-    parseJsonBody(Readable.from(["{}"]), "text/plain", undefined),
-    /JSON content type/
+    parseJsonBody(Readable.from(["not json"]), "text/plain", undefined),
+    /not valid JSON/
   );
   await assert.rejects(
     parseJsonBody(
@@ -130,5 +141,59 @@ test("rejects non-JSON and oversized response bodies", async () => {
   await assert.rejects(
     parseJsonBody(Readable.from(["{}"]), "application/json", "9", 8),
     /size limit/
+  );
+  await assert.rejects(
+    parseJsonBody(Readable.from(["not json"]), "application/json", undefined),
+    /Unexpected token|not valid JSON|JSON/
+  );
+});
+
+test("rejects bodies that exceed the size limit when sniffed as JSON", async () => {
+  await assert.rejects(
+    parseJsonBody(Readable.from(["12345", "67890"]), "text/plain", undefined, 8),
+    /size limit/
+  );
+});
+
+test("validates redirect targets before they are fetched", () => {
+  // Plain redirects like gateway.irys.xyz -> CDN are allowed.
+  assert.equal(
+    validateRedirectTarget(
+      "https://gateway.irys.xyz/ENQWSDNsb3EZsLaq7s7PrA64PfEUUFM8XEq8Q5cAwbJ6",
+      "https://cdn.datasprite.app/metadata.json"
+    ),
+    "https://cdn.datasprite.app/metadata.json"
+  );
+
+  // Relative Location headers resolve against the current URL.
+  assert.equal(
+    validateRedirectTarget("https://example.com/a/b.json", "/c/d.json"),
+    "https://example.com/c/d.json"
+  );
+
+  // Missing Location header, non-HTTPS, IP literals, and private hosts fail.
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", undefined),
+    /missing a location header/
+  );
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", "http://example.com/b.json"),
+    /Unsafe metadata redirect URL/
+  );
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", "https://169.254.169.254/latest"),
+    /Unsafe metadata redirect URL/
+  );
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", "https://[::1]/metadata.json"),
+    /Unsafe metadata redirect URL/
+  );
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", "https://user@example.com/a"),
+    /Unsafe metadata redirect URL/
+  );
+  assert.throws(
+    () => validateRedirectTarget("https://example.com/a.json", "mailto:you@example.com"),
+    /Unsafe metadata redirect URL/
   );
 });

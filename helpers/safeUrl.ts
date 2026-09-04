@@ -152,16 +152,38 @@ const isJsonContentType = (value: string | undefined) => {
   );
 };
 
+const REDIRECT_STATUS_CODES = new Set([301, 302, 303, 307, 308]);
+
+export const MAX_METADATA_REDIRECTS = 5;
+
+export const validateRedirectTarget = (
+  currentUrl: string,
+  locationHeader: string | undefined
+): string => {
+  if (!locationHeader) {
+    throw new Error("Redirect response is missing a location header");
+  }
+
+  let target: URL;
+  try {
+    target = new URL(locationHeader, currentUrl);
+  } catch {
+    throw new Error("Redirect response has an invalid location header");
+  }
+
+  if (!isSafeHttpsUrl(target.href)) {
+    throw new Error("Unsafe metadata redirect URL");
+  }
+
+  return target.href;
+};
+
 export const parseJsonBody = async (
   body: AsyncIterable<Uint8Array | string>,
   contentType: string | undefined,
   contentLength: string | undefined,
   maxBytes = MAX_METADATA_RESPONSE_BYTES
 ): Promise<unknown> => {
-  if (!isJsonContentType(contentType)) {
-    throw new Error("Metadata response must have a JSON content type");
-  }
-
   if (contentLength !== undefined) {
     if (!/^\d+$/.test(contentLength)) {
       throw new Error("Metadata response has an invalid content length");
@@ -187,27 +209,53 @@ export const parseJsonBody = async (
     chunks.push(buffer);
   }
 
-  return JSON.parse(Buffer.concat(chunks, receivedBytes).toString("utf8"));
-};
-
-export const fetchSafeJson = async <T = unknown>(
-  value: string,
-  timeoutMs = 10_000,
-  resolver: ResolveAddresses = resolveAddresses
-): Promise<T> => {
-  if (!isSafeHttpsUrl(value)) {
-    throw new Error("Unsafe metadata URL");
+  const text = Buffer.concat(chunks, receivedBytes).toString("utf8");
+  if (isJsonContentType(contentType)) {
+    return JSON.parse(text);
   }
 
-  return new Promise<T>((resolve, reject) => {
+  // Many hosts serve JSON as text/plain or application/octet-stream — sniff it.
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error("Metadata response is not valid JSON");
+  }
+};
+
+type SafeFetchResult<T> = { json: T } | { redirect: string };
+
+const fetchSafeSingleHop = <T = unknown>(
+  value: string,
+  signal: AbortSignal,
+  resolver: ResolveAddresses
+): Promise<SafeFetchResult<T>> => {
+  return new Promise<SafeFetchResult<T>>((resolve, reject) => {
     const request = httpsGet(
       new URL(value),
       {
         headers: { accept: "application/json" },
         lookup: createSafeLookup(resolver),
-        signal: AbortSignal.timeout(timeoutMs),
+        signal,
       },
       (response) => {
+        if (
+          response.statusCode !== undefined &&
+          REDIRECT_STATUS_CODES.has(response.statusCode)
+        ) {
+          response.resume();
+          try {
+            resolve({
+              redirect: validateRedirectTarget(
+                value,
+                response.headers.location
+              ),
+            });
+          } catch (error) {
+            reject(error);
+          }
+          return;
+        }
+
         if (
           response.statusCode === undefined ||
           response.statusCode < 200 ||
@@ -227,7 +275,7 @@ export const fetchSafeJson = async <T = unknown>(
           response.headers["content-type"],
           response.headers["content-length"]
         ).then(
-          (body) => resolve(body as T),
+          (body) => resolve({ json: body as T }),
           (error) => {
             response.destroy();
             reject(error);
@@ -238,4 +286,58 @@ export const fetchSafeJson = async <T = unknown>(
 
     request.on("error", reject);
   });
+};
+
+export const fetchSafeJson = async <T = unknown>(
+  value: string,
+  timeoutMs = 10_000,
+  resolver: ResolveAddresses = resolveAddresses
+): Promise<T> => {
+  if (!isSafeHttpsUrl(value)) {
+    throw new Error("Unsafe metadata URL");
+  }
+
+  // One deadline covers the whole redirect chain.
+  const signal = AbortSignal.timeout(timeoutMs);
+  let currentUrl = value;
+
+  for (let hop = 0; ; hop++) {
+    const result = await fetchSafeSingleHop<T>(currentUrl, signal, resolver);
+    if ("json" in result) {
+      return result.json;
+    }
+
+    if (hop >= MAX_METADATA_REDIRECTS) {
+      throw new Error("Metadata request exceeded the redirect limit");
+    }
+
+    // validateRedirectTarget already enforced isSafeHttpsUrl on the target,
+    // and the request below re-applies createSafeLookup to its new hostname.
+    currentUrl = result.redirect;
+  }
+};
+
+const METADATA_FETCH_ATTEMPTS = 3;
+const METADATA_FETCH_BACKOFF_MS = 800;
+
+const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+export const fetchSafeJsonWithRetry = async <T = unknown>(
+  value: string,
+  timeoutMs = 10_000,
+  resolver: ResolveAddresses = resolveAddresses
+): Promise<T> => {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < METADATA_FETCH_ATTEMPTS; attempt++) {
+    if (attempt > 0) {
+      await sleep(METADATA_FETCH_BACKOFF_MS);
+    }
+    try {
+      return await fetchSafeJson<T>(value, timeoutMs, resolver);
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError;
 };

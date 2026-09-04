@@ -14,7 +14,8 @@ import BigNumber from "bignumber.js";
 import { AnchorProvider, Program, Wallet } from "@coral-xyz/anchor";
 import { LiquidUnstaker } from "./helpers/liquidUnstaker";
 import IDL from "./helpers/liquidUnstaker.json";
-import { fetchSafeJson, isSafeHttpsUrl } from "./helpers/safeUrl";
+import { fetchSafeJsonWithRetry, isSafeHttpsUrl } from "./helpers/safeUrl";
+import { restorePreviousMetadata } from "./helpers/merge";
 
 const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
   "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
@@ -67,21 +68,23 @@ const getTokenMetadatasFromChain = async (
               return undefined;
             }
 
-            const meta = await fetchSafeJson<Record<string, unknown>>(
+            const meta = await fetchSafeJsonWithRetry<Record<string, unknown>>(
               data.data.uri
             );
-            if (!isSafeHttpsUrl(meta.image)) {
+            let image: string | undefined;
+            if (isSafeHttpsUrl(meta.image)) {
+              image = meta.image;
+            } else {
               console.warn(
-                `Skipping metadata for ${chunk[_index].toString()}: invalid image URL`
+                `Keeping metadata for ${chunk[_index].toString()}: unsafe image URL, omitting image`
               );
-              return undefined;
             }
 
             return {
               ...data,
               ...meta,
               data: data.data,
-              image: meta.image,
+              image,
               // @ts-expect-error ignore
               decimals: info?.data?.parsed?.info?.decimals,
             };
@@ -334,10 +337,6 @@ const run = async () => {
     connection,
     STAKE_POOL_PROGRAM_ID
   );
-  files.push({
-    path: "stakepool-lists.json",
-    content: JSON.stringify(stakePoolProgramLsts, null, 2),
-  });
 
   // Get all sanctum program LSTs
   console.log("Getting Sanctum program LSTs");
@@ -352,10 +351,20 @@ const run = async () => {
     connection,
     SANCTUM_SPL_MULTI_PROGRAM_ID
   );
+  const sanctumLists = [...sanctumProgramLsts, ...sanctumSplMultiLsts];
+
+  // Restore metadata that a previous run had for pools whose metadata fetch
+  // failed this time, so one bad run does not permanently erase metadata.
+  await restorePreviousMetadata("stakepool-lists.json", stakePoolProgramLsts);
+  await restorePreviousMetadata("sanctum-lists.json", sanctumLists);
 
   files.push({
+    path: "stakepool-lists.json",
+    content: JSON.stringify(stakePoolProgramLsts, null, 2),
+  });
+  files.push({
     path: "sanctum-lists.json",
-    content: JSON.stringify([...sanctumProgramLsts, ...sanctumSplMultiLsts], null, 2),
+    content: JSON.stringify(sanctumLists, null, 2),
   });
 
   console.log("Saving data to GitHub");
