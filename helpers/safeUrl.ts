@@ -6,6 +6,13 @@ import type { LookupFunction } from "node:net";
 
 export const MAX_METADATA_RESPONSE_BYTES = 1024 * 1024;
 
+// node:https sends no User-Agent by default. Some metadata hosts (notably
+// arweave.net) answer 403 to a request that asks for JSON without
+// identifying itself, which silently drops the token from the generated
+// lists. Identify the crank explicitly.
+export const METADATA_USER_AGENT =
+  "vault-lst-list-generator (+https://github.com/SolanaVault/vault-lst-list-generator)";
+
 const blockedAddresses = new BlockList();
 
 for (const [network, prefix] of [
@@ -233,7 +240,10 @@ const fetchSafeSingleHop = <T = unknown>(
     const request = httpsGet(
       new URL(value),
       {
-        headers: { accept: "application/json" },
+        headers: {
+          accept: "application/json",
+          "user-agent": METADATA_USER_AGENT,
+        },
         lookup: createSafeLookup(resolver),
         signal,
       },
