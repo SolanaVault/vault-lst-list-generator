@@ -42,6 +42,7 @@ jobs:
       - name: Run Dune admin action
         run: |
           set -euo pipefail
+          echo "debug: action=${ACTION_TYPE} query=${QUERY_ID} keylen=${#DUNE_API_KEY}"
           API="https://api.dune.com/api/v1"
           hdr=(-H "x-dune-api-key: ${DUNE_API_KEY}")
 
