@@ -19,6 +19,7 @@ on:
           - check_results
           - plan_usage
           - usage_v3
+          - usage_v2
           - list_queries
           - list_executions
         default: read_sql
@@ -135,6 +136,17 @@ jobs:
                   | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/[redacted]/g'
                 echo
               done
+              ;;
+            usage_v2)
+              echo "== POST /api/v1/usage (current billing period) =="
+              curl -sS -X POST "${hdr[@]}" -H "Content-Type: application/json" -d '{}' "${API}/usage" \
+                | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/[redacted]/g' | head -c 2500
+              echo
+              echo "== GET /api/v1/queries/list?limit=100 =="
+              R="$(curl -sS "${hdr[@]}" "${API}/queries/list?limit=100" || true)"
+              printf '%s' "$R" | jq -c '{total: .total, owners: ([.queries[].owner] | unique), queries: [.queries[] | {id, owner, name}]}' \
+                || { echo "raw head:"; printf '%s\n' "$R" | head -c 800; }
+              echo
               ;;
             usage_v3)
               V3="https://api.dune.com/api/v3"
