@@ -18,6 +18,7 @@ on:
           - run_now
           - check_results
           - plan_usage
+          - usage_v3
           - list_queries
           - list_executions
         default: read_sql
@@ -132,6 +133,17 @@ jobs:
                 R="$(curl -s "${hdr[@]}" "${API}/${ep}")"
                 printf '%s' "$R" | jq -c 'del(.. | .email? | select(. != null))' 2>/dev/null || printf '%s\n' "$R" | head -c 400 \
                   | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/[redacted]/g'
+                echo
+              done
+              ;;
+            usage_v3)
+              V3="https://api.dune.com/api/v3"
+              for ep in "analytics/user/limits" "analytics/user/tokens" "analytics/user/usage/daily?period=14" "analytics/user/api/queries/${QUERY_ID}/usage/daily?period=14" "api-keys"; do
+                echo "== GET /api/v3/${ep} =="
+                R="$(curl -sS --max-time 60 "${hdr[@]}" "${V3}/${ep}" || true)"
+                if [ -z "${R}" ]; then echo "(empty response)"; echo; continue; fi
+                # strip anything email-like from both branches before it hits this PUBLIC log
+                printf '%s\n' "${R}" | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/[redacted]/g' | head -c 1200
                 echo
               done
               ;;
