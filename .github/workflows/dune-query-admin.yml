@@ -1,0 +1,114 @@
+name: Dune query admin
+
+# Maintenance tooling for the Dune queries that feed dune.json /
+# dune-stakepool.json. Lets us (a) read a query's SQL into the logs,
+# (b) push an updated SQL from dune/queries/<id>.sql back to Dune,
+# (c) trigger a query run, (d) peek at cached results — all using the
+# repo's DUNE_API_KEY secret without anyone pasting it anywhere.
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "What to do"
+        required: true
+        type: choice
+        options:
+          - read_sql
+          - update_sql
+          - run_now
+          - check_results
+        default: read_sql
+      query_id:
+        description: "Dune query id"
+        required: true
+        default: "5304965"
+
+jobs:
+  admin:
+    name: ${{ inputs.action }} (query ${{ inputs.query_id }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
+      QUERY_ID: ${{ inputs.query_id }}
+      ACTION_TYPE: ${{ inputs.action }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Dune admin action
+        run: |
+          set -euo pipefail
+          API="https://api.dune.com/api/v1"
+          hdr=(-H "x-dune-api-key: ${DUNE_API_KEY}")
+
+          case "${ACTION_TYPE}" in
+            read_sql)
+              echo "::notice::SQL below is the live Dune copy of query ${QUERY_ID} (Dune queries behind public dashboards are public)."
+              curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}" | jq '{name, private, query_sql}'
+              ;;
+            update_sql)
+              F="dune/queries/${QUERY_ID}.sql"
+              if [ ! -f "${F}" ]; then
+                echo "::error::${F} not found in repo"
+                exit 1
+              fi
+              B64="$(base64 -w0 "${F}")"
+              echo "Pushing ${F} ($(wc -c < "${F}") bytes) to Dune query ${QUERY_ID}"
+              jq -n --arg b "${B64}" '{base64_sql: $b}' \
+                | curl -s -X PUT "${hdr[@]}" -H 'content-type: application/json' -d @- \
+                    "${API}/query/${QUERY_ID}"
+              echo
+              echo "Verifying round-trip..."
+              REMOTE_SQL="$(curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}" | jq -r '.query_sql // empty')"
+              if [ -z "${REMOTE_SQL}" ]; then
+                echo "::error::Could not read query back from Dune"
+                exit 1
+              fi
+              local_md5="$(md5sum < "${F}")"
+              remote_md5="$(printf '%s' "${REMOTE_SQL}" | md5sum)"
+              # Dune may normalize trailing whitespace; compare after strip.
+              local_cmp="$(sed -e 's/[[:space:]]*$//' "${F}" | sed -e '/^$/d' | md5sum)"
+              remote_cmp="$(printf '%s' "${REMOTE_SQL}" | sed -e 's/[[:space:]]*$//' | sed -e '/^$/d' | md5sum)"
+              echo "local : ${local_md5}"
+              echo "remote: ${remote_md5}"
+              if [ "${local_cmp}" != "${remote_cmp}" ]; then
+                echo "::error::Round-trip mismatch after update (ignoring trailing whitespace)"
+                exit 1
+              fi
+              echo "Round-trip OK."
+              ;;
+            run_now)
+              echo "Queueing an execution of query ${QUERY_ID} (burns data points!)"
+              EXEC_RESP="$(curl -s -X POST "${hdr[@]}" "${API}/query/${QUERY_ID}/execution")"
+              EXEC_ID="$(printf '%s' "${EXEC_RESP}" | jq -r '.execution_id // empty')"
+              if [ -z "${EXEC_ID}" ]; then
+                echo "::error::Failed to queue execution (quota still exhausted?)"
+                printf '%s\n' "${EXEC_RESP}" | jq .
+                exit 1
+              fi
+              echo "execution_id=${EXEC_ID}"
+              for i in $(seq 1 60); do
+                sleep 10
+                STATUS="$(curl -s "${hdr[@]}" "${API}/execution/${EXEC_ID}" | jq -r '.status // "unknown"')"
+                echo "poll ${i}: ${STATUS}"
+                if [ "${STATUS}" = "QUERY_STATE_COMPLETED" ] || [ "${STATUS}" = "QUERY_STATE_FAILED" ] || [ "${STATUS}" = "QUERY_STATE_CANCELLED" ] || [ "${STATUS}" = "QUERY_STATE_EXPIRED" ]; then
+                  break
+                fi
+              done
+              if [ "${STATUS}" != "QUERY_STATE_COMPLETED" ]; then
+                echo "::error::Execution finished with status ${STATUS}"
+                curl -s "${hdr[@]}" "${API}/execution/${EXEC_ID}" | jq '{status, errors, incomplete_statements}'
+                exit 1
+              fi
+              curl -s "${hdr[@]}" "${API}/execution/${EXEC_ID}/results?limit=3" | jq '{rows: (.result.rows | length), latest: .result.rows[0].block_date}'
+              ;;
+            check_results)
+              curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}/results?limit=3&sort_by=block_slot+desc" \
+                | jq '{cached_until: .result.metadata.cached_until, result_pending: .result.metadata.result_pending, rows: (.result.rows | length), latest: (.result.rows[0] // empty | {block_date, block_slot}), err: (if .result then null else . end)}'
+              ;;
+            *)
+              echo "::error::unknown action ${ACTION_TYPE}"
+              exit 1
+              ;;
+          esac

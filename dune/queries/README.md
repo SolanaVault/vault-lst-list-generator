@@ -1,0 +1,2 @@
+-- Versioned copies of the Dune queries that feed our public data files.
+-- Apply with the "Dune query admin" workflow (action=update_sql, query_id=<id>).
