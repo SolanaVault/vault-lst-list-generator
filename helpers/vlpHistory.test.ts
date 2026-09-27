@@ -87,6 +87,39 @@ test("mergeVlpHistory tolerates junk rows", () => {
   assert.equal(merged.length, 1);
 });
 
+test("rowTimeMs parses Dune display strings, ISO, and epoch seconds/ms", async () => {
+  const { rowTimeMs } = await import("./vlpHistory");
+  assert.ok(Number.isFinite(rowTimeMs("2026-09-22 00:49:23.000 UTC")));
+  assert.ok(Number.isFinite(rowTimeMs("2026-09-22T00:49:23.000Z")));
+  assert.equal(rowTimeMs(1759000000), 1759000000 * 1000);
+  assert.equal(rowTimeMs(1759000000000), 1759000000000);
+  assert.equal(rowTimeMs("1759000000000"), 1759000000000);
+  assert.ok(Number.isNaN(rowTimeMs("garbage")));
+  assert.ok(Number.isNaN(rowTimeMs(undefined)));
+});
+
+test("mergeVlpHistory orders Dune display strings and drops unparseable times", () => {
+  const dune = (slot: number, t: string) => ({
+    block_slot: slot,
+    block_time: t,
+    rate_floor_24h: 1 + slot / 100000,
+  });
+  const incoming = [
+    dune(300, "2026-09-22 00:00:00.000 UTC"),
+    dune(200, "2026-09-21 00:00:00.000 UTC"),
+    { block_slot: 999, block_time: "not-a-time", rate_floor_24h: 9 },
+  ];
+  const merged = mergeVlpHistory(incoming, []);
+  assert.deepEqual(
+    merged.map((r) => r.block_slot),
+    [300, 200]
+  );
+  assert.ok(
+    (merged[0].vlp_price as number) >= (merged[1].vlp_price as number),
+    "newest row carries the running max"
+  );
+});
+
 test("extractStoredRows reads both dune.json shapes", () => {
   const v2 = { result: { rows: [row(1, "1", 1)] } };
   const v1 = { current: [row(2, "2", 1)] };

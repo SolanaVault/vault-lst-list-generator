@@ -241,7 +241,7 @@ const getStakePoolProgramLsts = async (
 
 const getVLPAPY = async () => {
   const response = await fetch(
-    `https://api.dune.com/api/v1/query/5304965/results?limit=10000&sort_by=block_slot+desc`,
+    `https://api.dune.com/api/v1/query/5304965/results?limit=1000&sort_by=block_slot+desc`,
     {
       headers: {
         "x-dune-api-key": process.env.DUNE_API_KEY!,
@@ -266,20 +266,20 @@ const getVLPAPY = async () => {
 // series the dapp and dashboards chart. Read the stored history so the daily
 // window can be merged back onto it (see helpers/vlpHistory.ts).
 const readStoredDuneRows = async () => {
-  try {
-    const resp = await fetch(
-      "https://raw.githubusercontent.com/SolanaVault/vault-lst-list-generator/main/dune.json",
-      { headers: { "cache-control": "no-cache" } }
-    );
-    if (!resp.ok) {
-      console.log(`No stored dune.json yet (HTTP ${resp.status})`);
-      return [];
-    }
-    return extractStoredRows(await resp.json());
-  } catch (e) {
-    console.warn("Could not read stored dune.json:", e);
+  const resp = await fetch(
+    "https://raw.githubusercontent.com/SolanaVault/vault-lst-list-generator/main/dune.json",
+    { headers: { "cache-control": "no-cache" } }
+  );
+  if (resp.status === 404) {
+    console.log("No stored dune.json yet (404) - starting history from this run");
     return [];
   }
+  if (!resp.ok) {
+    // A transient 429/5xx here must NEVER be mistaken for "no history", or we
+    // would rebalance dune.json onto a single window and lose the backlog.
+    throw new Error(`stored dune.json fetch failed: HTTP ${resp.status}`);
+  }
+  return extractStoredRows(await resp.json());
 };
 
 const getStakePoolAPY = async () => {
@@ -325,21 +325,36 @@ const run = async () => {
     console.log(
       `VLP history: incoming=${incomingRows.length} stored=${existingRows.length} merged=${mergedRows.length}`
     );
-    files.push({
-      path: "dune.json",
-      content: JSON.stringify(
-        {
+    if (mergedRows.length < incomingRows.length) {
+      throw new Error(
+        `merge sanity check failed: merged(${mergedRows.length}) < incoming(${incomingRows.length})`
+      );
+    }
+    const rowKey = (r: any) => `${r?.block_slot}|${r?.block_time}`;
+    const unchanged =
+      existingRows.length > 0 &&
+      mergedRows.length === existingRows.length &&
+      rowKey(mergedRows[0]) === rowKey(existingRows[0]);
+    if (unchanged) {
+      // Dune cache did not advance (or an upstream refresh is pending); keep
+      // the stored file untouched instead of churning a multi-MB commit.
+      console.log("No new VLP rows - dune.json unchanged");
+    } else {
+      const { next_uri, next_offset, ...rest } = vlpData.fullResponse;
+      files.push({
+        path: "dune.json",
+        content: JSON.stringify({
           timestamp: new Date().toISOString(),
-          ...vlpData.fullResponse,
+          ...rest,
           result: {
             ...vlpData.fullResponse.result,
+            row_count: mergedRows.length,
+            total_row_count: mergedRows.length,
             rows: mergedRows,
           },
-        },
-        null,
-        2
-      ),
-    });
+        }),
+      });
+    }
   } catch (e) {
     console.error("VLP APY update failed:", e);
     duneFailures.push(`VLP APY (query 5304965): ${(e as Error).message}`);
