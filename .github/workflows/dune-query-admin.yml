@@ -17,6 +17,9 @@ on:
           - update_sql
           - run_now
           - check_results
+          - plan_usage
+          - list_queries
+          - list_executions
         default: read_sql
       query_id:
         description: "Dune query id"
@@ -106,6 +109,25 @@ jobs:
             check_results)
               curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}/results?limit=3&sort_by=block_slot+desc" \
                 | jq '{cached_until: .result.metadata.cached_until, result_pending: .result.metadata.result_pending, rows: (.result.rows | length), latest: (.result.rows[0] // empty | {block_date, block_slot}), err: (if .result then null else . end)}'
+              ;;
+            plan_usage)
+              # Probe account/plan/usage endpoints; jq strips any email fields
+              # before they hit the (public) log.
+              for ep in user user/limits user/usage usage plans subscriptions; do
+                echo "== GET /api/v1/${ep} =="
+                R="$(curl -s "${hdr[@]}" "${API}/${ep}")"
+                printf '%s' "$R" | jq -c 'del(.. | .email? | select(. != null))' 2>/dev/null || printf '%s\n' "$R" | head -c 400 \
+                  | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/[redacted]/g'
+                echo
+              done
+              ;;
+            list_queries)
+              R="$(curl -s "${hdr[@]}" "${API}/queries/list?limit=200")"
+              printf '%s' "$R" | jq -c '{count: (.queries | length), mine: [.queries[] | select(.name | test("vault|unstak|llst|vlp|stake|lst|jito|lsts"; "i")) | {query_id, name}]}' 2>/dev/null || printf '%s\n' "$R" | head -c 400
+              ;;
+            list_executions)
+              curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}/executions" \
+                | jq -c '[.executions[]? | {execution_id, status, submitted_at, finished_at}][:15]'
               ;;
             *)
               echo "::error::unknown action ${ACTION_TYPE}"
