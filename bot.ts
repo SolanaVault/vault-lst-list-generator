@@ -271,6 +271,10 @@ const getStakePoolAPY = async () => {
     }
   );
   const data = await response.json();
+  if (!data.result?.rows) {
+    console.error("Dune Stake Pool APY response:", JSON.stringify(data, null, 2));
+    throw new Error("Dune Stake Pool APY query returned no results");
+  }
   return {
     fullResponse: data,
   };
@@ -280,6 +284,11 @@ const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
 
   const files = [];
+
+  // Dune failures must never be silent: a green run with stale dune.json hid
+  // an API quota outage for days. We still publish the other datasets, but the
+  // run exits non-zero at the end so the workflow alerts.
+  const duneFailures: string[] = [];
 
   // Get VLP price
   console.log("Getting VLP apy");
@@ -301,7 +310,8 @@ const run = async () => {
       ),
     });
   } catch (e) {
-    console.error("Skipping VLP APY update:", e);
+    console.error("VLP APY update failed:", e);
+    duneFailures.push(`VLP APY (query 5304965): ${(e as Error).message}`);
   }
 
   // Get Stake Pool APY
@@ -320,7 +330,8 @@ const run = async () => {
       ),
     });
   } catch (e) {
-    console.error("Skipping Stake Pool APY update:", e);
+    console.error("Stake Pool APY update failed:", e);
+    duneFailures.push(`Stake Pool APY (query 3936523): ${(e as Error).message}`);
   }
 
   // Get all DSTs
@@ -369,6 +380,16 @@ const run = async () => {
 
   console.log("Saving data to GitHub");
   await saveDataToGitHub(files);
+
+  if (duneFailures.length > 0) {
+    console.error(
+      `Failing run: ${duneFailures.length} Dune update(s) failed (other datasets were still saved):`
+    );
+    for (const failure of duneFailures) {
+      console.error(` - ${failure}`);
+    }
+    process.exit(1);
+  }
 };
 
 run();
