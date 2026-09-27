@@ -16,6 +16,7 @@ import { LiquidUnstaker } from "./helpers/liquidUnstaker";
 import IDL from "./helpers/liquidUnstaker.json";
 import { fetchSafeJsonWithRetry, isSafeHttpsUrl } from "./helpers/safeUrl";
 import { restorePreviousMetadata } from "./helpers/merge";
+import { extractStoredRows, mergeVlpHistory } from "./helpers/vlpHistory";
 
 const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
   "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
@@ -240,7 +241,7 @@ const getStakePoolProgramLsts = async (
 
 const getVLPAPY = async () => {
   const response = await fetch(
-    `https://api.dune.com/api/v1/query/5304965/results?limit=1000&sort_by=block_slot+desc`,
+    `https://api.dune.com/api/v1/query/5304965/results?limit=10000&sort_by=block_slot+desc`,
     {
       headers: {
         "x-dune-api-key": process.env.DUNE_API_KEY!,
@@ -248,7 +249,7 @@ const getVLPAPY = async () => {
     }
   );
   const data = await response.json();
-  if (!data.result?.rows) {
+  if (!data.result?.rows?.length) {
     console.error("Dune VLP APY response:", JSON.stringify(data, null, 2));
     throw new Error("Dune VLP APY query returned no results");
   }
@@ -261,6 +262,26 @@ const getVLPAPY = async () => {
   };
 };
 
+// The wrapper query only emits the last ~90 days, but dune.json is the full
+// series the dapp and dashboards chart. Read the stored history so the daily
+// window can be merged back onto it (see helpers/vlpHistory.ts).
+const readStoredDuneRows = async () => {
+  try {
+    const resp = await fetch(
+      "https://raw.githubusercontent.com/SolanaVault/vault-lst-list-generator/main/dune.json",
+      { headers: { "cache-control": "no-cache" } }
+    );
+    if (!resp.ok) {
+      console.log(`No stored dune.json yet (HTTP ${resp.status})`);
+      return [];
+    }
+    return extractStoredRows(await resp.json());
+  } catch (e) {
+    console.warn("Could not read stored dune.json:", e);
+    return [];
+  }
+};
+
 const getStakePoolAPY = async () => {
   const response = await fetch(
     `https://api.dune.com/api/v1/query/3936523/results?limit=1000&sort_by=block_date+desc`,
@@ -271,7 +292,7 @@ const getStakePoolAPY = async () => {
     }
   );
   const data = await response.json();
-  if (!data.result?.rows) {
+  if (!data.result?.rows?.length) {
     console.error("Dune Stake Pool APY response:", JSON.stringify(data, null, 2));
     throw new Error("Dune Stake Pool APY query returned no results");
   }
@@ -298,12 +319,22 @@ const run = async () => {
       path: "vlp-apy.json",
       content: JSON.stringify({ apy: vlpData.apy }, null, 2),
     });
+    const existingRows = await readStoredDuneRows();
+    const incomingRows: any[] = vlpData.fullResponse?.result?.rows ?? [];
+    const mergedRows = mergeVlpHistory(incomingRows, existingRows);
+    console.log(
+      `VLP history: incoming=${incomingRows.length} stored=${existingRows.length} merged=${mergedRows.length}`
+    );
     files.push({
       path: "dune.json",
       content: JSON.stringify(
         {
           timestamp: new Date().toISOString(),
           ...vlpData.fullResponse,
+          result: {
+            ...vlpData.fullResponse.result,
+            rows: mergedRows,
+          },
         },
         null,
         2

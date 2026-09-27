@@ -11,7 +11,7 @@
   "scripts": {
     "local": "tsx --env-file=.env bot.ts",
     "start": "tsx bot.ts",
-    "test": "node --import tsx --test helpers/safeUrl.test.ts"
+    "test": "node --import tsx --test helpers/safeUrl.test.ts helpers/vlpHistory.test.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.0",
