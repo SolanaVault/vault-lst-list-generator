@@ -107,7 +107,7 @@ jobs:
               curl -s "${hdr[@]}" "${API}/execution/${EXEC_ID}/results?limit=3" | jq '{rows: (.result.rows | length), latest: .result.rows[0].block_date}'
               ;;
             check_results)
-              curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}/results?limit=3&sort_by=block_slot+desc" \
+              curl -s "${hdr[@]}" "${API}/query/${QUERY_ID}/results?limit=10000&sort_by=block_slot+desc" \
                 | jq '{cached_until: .result.metadata.cached_until, result_pending: .result.metadata.result_pending, rows: (.result.rows | length), latest: (.result.rows[0] // empty | {block_date, block_slot}), err: (if .result then null else . end)}'
               ;;
             plan_usage)
