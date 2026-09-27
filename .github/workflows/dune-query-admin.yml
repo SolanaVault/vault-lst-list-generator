@@ -45,6 +45,7 @@ jobs:
           echo "debug: action=${ACTION_TYPE} query=${QUERY_ID} keylen=${#DUNE_API_KEY}"
           API="https://api.dune.com/api/v1"
           hdr=(-H "x-dune-api-key: ${DUNE_API_KEY}")
+          echo "debug: setup done"
 
           case "${ACTION_TYPE}" in
             read_sql)
@@ -108,11 +109,13 @@ jobs:
               curl -s "${hdr[@]}" "${API}/execution/${EXEC_ID}/results?limit=3" | jq '{rows: (.result.rows | length), latest: .result.rows[0].block_date}'
               ;;
             check_results)
+              echo "debug: in check_results branch"
               RESP="$(curl -sS --max-time 120 "${hdr[@]}" "${API}/query/${QUERY_ID}/results?limit=1000&sort_by=block_slot+desc" || true)"
               if [ -z "${RESP}" ]; then
                 echo "::error::Empty response from Dune results endpoint"
                 exit 1
               fi
+              echo "debug: response length ${#RESP}"
               printf '%s\n' "${RESP}" | jq '{cached_until: .result.metadata.cached_until, result_pending: .result.metadata.result_pending, rows: (.result.rows | length), latest: (.result.rows[0] // empty | {block_date, block_slot}), err: (if .result then null else . end)}' 2>/dev/null \
                 || { echo "Unparsable response (first 400 chars):"; printf '%s\n' "${RESP}" | head -c 400; exit 1; }
               ;;
