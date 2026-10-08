@@ -1,0 +1,46 @@
+name: Publish validator metrics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+concurrency:
+  group: validator-metrics
+  cancel-in-progress: false
+
+jobs:
+  publish-validator-metrics:
+    name: Publish validator metrics
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.0
+          # `cache: npm` mirrors the green run.yml rather than `cache: yarn`,
+          # which the repo has never exercised on a runner.
+          cache: npm
+
+      - name: Install Dependencies
+        id: yarn-ci
+        run: yarn install
+
+      - name: Validate generator
+        run: yarn test
+
+      - name: Run validator-metrics publisher
+        id: run-validator-metrics
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npx tsx validator-metrics.ts
