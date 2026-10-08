@@ -1143,7 +1143,13 @@ const run = async () => {
 		console.log(
 			`Saving ${filesToCommit.length} files to GitHub (${carried} unchanged validator files not re-committed)`,
 		);
-		await saveDataToGitHub(filesToCommit);
+		// Run-stamped message: with byte-stable files, the commit list is the
+		// history of this publisher, and every commit must say which run made
+		// it (saveDataToGitHub splits it into batches that share the message).
+		await saveDataToGitHub(
+			filesToCommit,
+			`Publish validator metrics ${new Date(startedAt).toISOString()}`,
+		);
 	}
 	console.log(
 		`Run done in ${((Date.now() - startedAt) / 1000).toFixed(1)}s: ${
