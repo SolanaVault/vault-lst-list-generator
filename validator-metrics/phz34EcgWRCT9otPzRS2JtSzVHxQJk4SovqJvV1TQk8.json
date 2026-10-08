@@ -1,0 +1,314 @@
+{
+  "$schemaVersion": 1,
+  "voteAccount": "phz34EcgWRCT9otPzRS2JtSzVHxQJk4SovqJvV1TQk8",
+  "identity": "phz1CRbEsCtFCh2Ro5tjyu588VU1WPMwW9BJS9yFNn2",
+  "epoch": 1052,
+  "sections": {
+    "ranks": {
+      "ok": true,
+      "data": {
+        "epoch": 1052,
+        "stakeSol": 146407.749081608,
+        "creditsLastEpoch": 6907687,
+        "country": "Japan",
+        "continent": "Asia",
+        "stake": {
+          "global": {
+            "rank": 389,
+            "of": 679
+          },
+          "vault": {
+            "rank": 78,
+            "of": 157
+          },
+          "country": {
+            "rank": 24,
+            "of": 53
+          },
+          "continent": {
+            "rank": 53,
+            "of": 115
+          }
+        },
+        "performance": {
+          "global": {
+            "rank": 563,
+            "of": 677
+          },
+          "vault": {
+            "rank": 138,
+            "of": 157
+          },
+          "country": {
+            "rank": 37,
+            "of": 53
+          },
+          "continent": {
+            "rank": 86,
+            "of": 115
+          }
+        }
+      }
+    },
+    "delinquency": {
+      "ok": true,
+      "data": {
+        "votePubkey": "phz34EcgWRCT9otPzRS2JtSzVHxQJk4SovqJvV1TQk8",
+        "trackedSince": 1790219008531,
+        "sampleIntervalMs": 60000,
+        "epochs": [
+          {
+            "epoch": 1041,
+            "startAt": 1790219008531,
+            "endAt": 1790283651631,
+            "partial": true,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1042,
+            "startAt": 1790283651631,
+            "endAt": 1790399340532,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1043,
+            "startAt": 1790399340532,
+            "endAt": 1790515084431,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1044,
+            "startAt": 1790515084431,
+            "endAt": 1790630979810,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1045,
+            "startAt": 1790630979810,
+            "endAt": 1790746574556,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1046,
+            "startAt": 1790746574556,
+            "endAt": 1790862085268,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1047,
+            "startAt": 1790862085268,
+            "endAt": 1790977861880,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1048,
+            "startAt": 1790977861880,
+            "endAt": 1791093286507,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1049,
+            "startAt": 1791093286507,
+            "endAt": 1791208902681,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1050,
+            "startAt": 1791208902681,
+            "endAt": 1791324882093,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1051,
+            "startAt": 1791324882093,
+            "endAt": 1791440923155,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1052,
+            "startAt": 1791440923155,
+            "endAt": 1791450700269,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          }
+        ],
+        "incidents": []
+      }
+    },
+    "blockRewards": {
+      "ok": false,
+      "reason": "not_recorded",
+      "detail": "no recorded block rewards (validator opt-in required)"
+    },
+    "bonds": {
+      "ok": true,
+      "data": {
+        "epoch": 1052,
+        "jpool": {
+          "balanceSol": 1.464582965,
+          "solSol": 1.464582965,
+          "jsolAmount": 0,
+          "jsolRateSol": 1.3799430619884145,
+          "requiredSol": 0.000148135,
+          "securityRequiredSol": 0,
+          "performanceRequiredSol": 0.000148135,
+          "level": "Healthy",
+          "healthFraction": 1,
+          "jpoolStakeSol": 15.777516796,
+          "directStakeSol": 0,
+          "targetStakeSol": 0,
+          "slotCategory": "Unassigned",
+          "targetApyPct": 5.166002,
+          "apyDeficitPct": 0.25600083,
+          "suspended": false,
+          "epoch": 1052
+        },
+        "marinade": {
+          "bondPubkey": "DTTM8woiBzD9iRYo3ZEK6dpmm9jYWX3Kb63Ed7RAFfUc",
+          "epoch": 1052,
+          "effectiveSol": 1.164724442,
+          "fundedSol": 1.164724442,
+          "pendingWithdrawSol": 0,
+          "settlementClaimSol": 0,
+          "cpmpe": 1e-9,
+          "maxStakeWantedSol": 151556,
+          "scoring": {
+            "epoch": 1051,
+            "stakeSol": 0,
+            "samTargetSol": 0,
+            "expectedMaxEffBidPmpe": 0.01,
+            "onchainDistributedPmpe": 0.17601038340623903,
+            "bidPmpe": 1e-9,
+            "bondBalanceSol": 1.164518705,
+            "bondRiskFeeSol": 0,
+            "paidUndelegationSol": 0,
+            "constraint": null,
+            "minBondEpochs": 4,
+            "idealBondEpochs": 12,
+            "minBondBalanceSol": 7
+          }
+        },
+        "select": null,
+        "errors": {}
+      }
+    },
+    "software": {
+      "ok": true,
+      "data": {
+        "version": "4.3.0",
+        "commissionPct": 5,
+        "delinquent": false,
+        "lastVote": 454423119,
+        "rootSlot": 454423088,
+        "skipRatePct": 0,
+        "epochCredits": 6253746,
+        "credits": 2445657613,
+        "activatedStakeSol": 256642.562580422,
+        "sfdp": {
+          "identity": "phz1CRbEsCtFCh2Ro5tjyu588VU1WPMwW9BJS9yFNn2",
+          "participant": {
+            "state": "Approved",
+            "onboardingEpoch": 595
+          },
+          "requirements": [
+            {
+              "epoch": 1051,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1052,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1053,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1054,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rewards": {
+      "ok": true,
+      "data": {
+        "basis": "cluster_epoch_average",
+        "epoch": 1051,
+        "leaderSlotsPerEpoch": 252,
+        "blockRewardsSol": 5.57,
+        "mevSol": 1.54,
+        "commissionPct": 5,
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0221112,
+        "clusterEpoch": 1051
+      }
+    }
+  }
+}
