@@ -1,0 +1,309 @@
+{
+  "$schemaVersion": 1,
+  "voteAccount": "EpicsoqLdDP8qRn3wQRKTSKAXbjK9dUgFfNPRQS77MQD",
+  "identity": "CJFQNDPydtX4eL6TsgWS1hKxjh8xpJQXgkLTvkCBL4g2",
+  "epoch": 1052,
+  "sections": {
+    "ranks": {
+      "ok": true,
+      "data": {
+        "epoch": 1052,
+        "stakeSol": 88531.956373771,
+        "creditsLastEpoch": 6909802,
+        "country": "The Netherlands",
+        "continent": "Europe",
+        "stake": {
+          "global": {
+            "rank": 549,
+            "of": 679
+          },
+          "vault": null,
+          "country": {
+            "rank": 76,
+            "of": 88
+          },
+          "continent": {
+            "rank": 344,
+            "of": 414
+          }
+        },
+        "performance": {
+          "global": {
+            "rank": 12,
+            "of": 677
+          },
+          "vault": null,
+          "country": {
+            "rank": 6,
+            "of": 88
+          },
+          "continent": {
+            "rank": 11,
+            "of": 414
+          }
+        }
+      }
+    },
+    "delinquency": {
+      "ok": true,
+      "data": {
+        "votePubkey": "EpicsoqLdDP8qRn3wQRKTSKAXbjK9dUgFfNPRQS77MQD",
+        "trackedSince": 1790219008531,
+        "sampleIntervalMs": 60000,
+        "epochs": [
+          {
+            "epoch": 1041,
+            "startAt": 1790219008531,
+            "endAt": 1790283651631,
+            "partial": true,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1042,
+            "startAt": 1790283651631,
+            "endAt": 1790399340532,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1043,
+            "startAt": 1790399340532,
+            "endAt": 1790515084431,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1044,
+            "startAt": 1790515084431,
+            "endAt": 1790630979810,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1045,
+            "startAt": 1790630979810,
+            "endAt": 1790746574556,
+            "partial": false,
+            "delinquentMs": 93710,
+            "incidents": 1
+          },
+          {
+            "epoch": 1046,
+            "startAt": 1790746574556,
+            "endAt": 1790862085268,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1047,
+            "startAt": 1790862085268,
+            "endAt": 1790977861880,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1048,
+            "startAt": 1790977861880,
+            "endAt": 1791093286507,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1049,
+            "startAt": 1791093286507,
+            "endAt": 1791208902681,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1050,
+            "startAt": 1791208902681,
+            "endAt": 1791324882093,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1051,
+            "startAt": 1791324882093,
+            "endAt": 1791440923155,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1052,
+            "startAt": 1791440923155,
+            "endAt": 1791450946665,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          }
+        ],
+        "incidents": [
+          {
+            "startedAt": 1790639990037,
+            "endedAt": 1790640083747,
+            "durationMs": 93710,
+            "startSlot": 451473867,
+            "endSlot": 451474194
+          }
+        ]
+      }
+    },
+    "blockRewards": {
+      "ok": false,
+      "reason": "not_recorded",
+      "detail": "no recorded block rewards (validator opt-in required)"
+    },
+    "bonds": {
+      "ok": true,
+      "data": {
+        "epoch": 1052,
+        "jpool": {
+          "balanceSol": 8.597620001,
+          "solSol": 8.597620001,
+          "jsolAmount": 0,
+          "jsolRateSol": 1.3799430619884145,
+          "requiredSol": 5.835418826000001,
+          "securityRequiredSol": 5.834096651,
+          "performanceRequiredSol": 0.001322175,
+          "level": "Healthy",
+          "healthFraction": 1,
+          "jpoolStakeSol": 12013.902134405,
+          "directStakeSol": 0,
+          "targetStakeSol": 11668.19330212,
+          "slotCategory": "CG",
+          "targetApyPct": 5.166002,
+          "apyDeficitPct": 0.0030007212999999997,
+          "suspended": false,
+          "epoch": 1052
+        },
+        "marinade": null,
+        "select": {
+          "bondPubkey": "3hrGKhWGC7b7Zy5xkEJnmEGvAhMhTQVeBcnfXft9b2QX",
+          "epoch": 1052,
+          "effectiveSol": 4.010217619,
+          "fundedSol": 7.521024089,
+          "pendingWithdrawSol": 0,
+          "settlementClaimSol": 3.51080647,
+          "selectStakeSol": 16747.405957748,
+          "requiredSol": 8.373702978874,
+          "recommendedSol": 16.747405957748,
+          "apyPct": 6.6860243293078065,
+          "apyPercentileDiffPct": 0.5284826392107953,
+          "stakeEpoch": 1051,
+          "latestPayout": {
+            "epoch": 1051,
+            "distributorFeeSol": 0.166442482,
+            "validatorFeeSol": 0.055480827,
+            "stakersSol": 0.268222481,
+            "psrFeeSol": 0
+          }
+        },
+        "errors": {}
+      }
+    },
+    "software": {
+      "ok": true,
+      "data": {
+        "version": "4.3.0",
+        "commissionPct": 0,
+        "delinquent": false,
+        "lastVote": 454423120,
+        "rootSlot": 454423089,
+        "skipRatePct": 0,
+        "epochCredits": 6255774,
+        "credits": 2435632057,
+        "activatedStakeSol": 88418.518553528,
+        "sfdp": {
+          "identity": "CJFQNDPydtX4eL6TsgWS1hKxjh8xpJQXgkLTvkCBL4g2",
+          "participant": null,
+          "requirements": [
+            {
+              "epoch": 1051,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1052,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1053,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            },
+            {
+              "epoch": 1054,
+              "agave": {
+                "min": "4.3.0",
+                "max": null
+              },
+              "frankendancer": {
+                "min": "0.1204.40300",
+                "max": null
+              },
+              "firedancer": {
+                "min": "26.8.5",
+                "max": null
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rewards": {
+      "ok": true,
+      "data": {
+        "basis": "cluster_epoch_average",
+        "epoch": 1051,
+        "leaderSlotsPerEpoch": 87,
+        "blockRewardsSol": 1.92,
+        "mevSol": 0.53,
+        "commissionPct": 0,
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0221112,
+        "clusterEpoch": 1051
+      }
+    }
+  }
+}
