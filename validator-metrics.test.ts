@@ -2,12 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-	buildFiles,
 	CADENCE_GRACE_MS,
+	buildFiles,
 	collectSiteListPubkeys,
 	hasPreviousSection,
 	isSectionDue,
 	resolveSectionValue,
+	settleDelinquency,
 	type Section,
 	unchanged,
 	unionValidatorSets,
@@ -276,6 +277,7 @@ const publishedFile = (
 		],
 		null,
 		null,
+		PUBLISH_NOW,
 	);
 	const raw = contents.get(`validator-metrics/${VOTE}.json`) as string;
 	return { raw, file: JSON.parse(raw) as PublishedFile };
@@ -286,6 +288,103 @@ const publishedRanks = (file: PublishedFile) => file.sections.ranks;
 // stake.vault / performance.vault, the cell the Metrics tab renders.
 const vaultCell = (data: Record<string, unknown>, group: string): unknown =>
 	(data[group] as Record<string, unknown>)["vault"];
+
+// The publish clock, pinned so delinquency settling is testable (the run passes
+// the same now it uses for the cadence clock).
+const PUBLISH_NOW = Date.UTC(2026, 9, 8, 12, 0, 0);
+const MIN = 60_000;
+
+const coverageRow = (epoch: number, endAt: number) => ({
+	epoch,
+	startAt: endAt - 1000 * MIN,
+	endAt,
+	partial: false,
+	delinquentMs: 0,
+	incidents: 0,
+});
+
+test("settleDelinquency drops the still-watched row and keeps every closed one", () => {
+	const data = {
+		votePubkey: VOTE,
+		epochs: [
+			coverageRow(1049, PUBLISH_NOW - 3000 * MIN),
+			coverageRow(1050, PUBLISH_NOW - 2000 * MIN),
+			// The live epoch: its endAt is "a minute ago" and moves every read.
+			coverageRow(1051, PUBLISH_NOW - MIN),
+		],
+		incidents: [],
+	};
+	const settled = settleDelinquency(data, PUBLISH_NOW) as typeof data;
+	assert.deepEqual(
+		settled.epochs.map((r) => r.epoch),
+		[1049, 1050],
+	);
+	// Everything besides the dropped row survives verbatim, incidents included.
+	assert.equal(settled.votePubkey, VOTE);
+	assert.deepEqual(settled.epochs[1], data.epochs[1]);
+});
+
+test("settleDelinquency returns the same object when nothing is live", () => {
+	const data = { epochs: [coverageRow(1050, PUBLISH_NOW - 400 * MIN)], incidents: [] };
+	// Identity, not an equal copy: this is what keeps a quiet run byte-identical
+	// instead of rewriting the file with a re-serialized payload.
+	assert.equal(settleDelinquency(data, PUBLISH_NOW), data);
+});
+
+test("settleDelinquency never publishes an empty history", () => {
+	// A validator tracked minutes ago has one row and it is live.
+	const data = { epochs: [coverageRow(1051, PUBLISH_NOW - MIN)], incidents: [] };
+	assert.equal(settleDelinquency(data, PUBLISH_NOW), data);
+});
+
+test("settleDelinquency is idempotent and ignores payloads it cannot read", () => {
+	const data = {
+		epochs: [coverageRow(1050, PUBLISH_NOW - 500 * MIN), coverageRow(1051, PUBLISH_NOW)],
+	};
+	const once = settleDelinquency(data, PUBLISH_NOW);
+	assert.deepEqual(settleDelinquency(once, PUBLISH_NOW), once);
+	for (const junk of [null, undefined, 42, "x", {}, { epochs: "not-an-array" }]) {
+		assert.deepEqual(settleDelinquency(junk, PUBLISH_NOW), junk);
+	}
+});
+
+test("published bytes carry no live delinquency row", () => {
+	const { contents } = buildFiles(
+		[
+			{
+				voteAccount: VOTE,
+				info: localInfo("ident", "Figment"),
+				previous: null,
+				fresh: {
+					ranks: { ok: true, data: FIGMENT_RANKS },
+					delinquency: {
+						ok: true,
+						data: {
+							votePubkey: VOTE,
+							epochs: [
+								coverageRow(1050, PUBLISH_NOW - 400 * MIN),
+								coverageRow(1051, PUBLISH_NOW - 2 * MIN),
+							],
+							incidents: [],
+						},
+					},
+				},
+			},
+		],
+		null,
+		1051,
+		PUBLISH_NOW,
+	);
+	const published = JSON.parse(
+		contents.get(`validator-metrics/${VOTE}.json`) as string,
+	) as PublishedFile;
+	const epochs = (published.sections.delinquency.data as { epochs: { epoch: number }[] })
+		.epochs;
+	assert.deepEqual(
+		epochs.map((r) => r.epoch),
+		[1050],
+	);
+});
 
 // Live /v1/ranks/CcaHc2L43ZWjwCHART3oZoJvHLAe9hzT2DJNUpBzoTN1 (Figment).
 const FIGMENT_RANKS = {

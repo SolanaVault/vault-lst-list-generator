@@ -669,6 +669,41 @@ const buildSoftwareSection = (
 	};
 };
 
+// Delinquency coverage rows come from a per-minute recorder, so the newest
+// row's `endAt` means "watched up to about a minute ago" and therefore differs
+// on EVERY read until that epoch closes. Published verbatim it made every
+// validator file differ on every run (measured on the live publish: 536 of 536
+// files changed, a single field each), which defeats byte-stability entirely —
+// ~4 MB re-uploaded four times a day to report a clock.
+//
+// Rows outside this window cannot move again: upstream ends a closed epoch at
+// the NEXT epoch's first sample (delinquency.ts:161), at most one recording
+// interval after the boundary. So the trailing not-yet-settled rows are
+// dropped, and each one gets published on the first run after it closes — with
+// its final value, one change instead of one change per run per epoch.
+const SETTLED_WINDOW_MS = 10 * 60_000;
+// A validator tracked minutes ago has exactly one row and it is live: dropping
+// it would publish an empty history (an empty-state page) to save nothing, so
+// the row stays and churns until its epoch closes. Rare, self-healing, bounded.
+export const settleDelinquency = (data: unknown, nowMs: number): unknown => {
+	if (!isRecord(data) || !Array.isArray(data.epochs)) {
+		return data;
+	}
+	const cutoff = nowMs - SETTLED_WINDOW_MS;
+	const settled = (data.epochs as unknown[]).filter((row) => {
+		return isRecord(row) && typeof row.endAt === "number" && row.endAt <= cutoff;
+	});
+	if (settled.length === data.epochs.length) {
+		// Nothing live to drop: return the original object so the caller stays
+		// byte-identical to the previous publish.
+		return data;
+	}
+	if (settled.length === 0) {
+		return data;
+	}
+	return { ...data, epochs: settled };
+};
+
 // Documented estimate (spec 2.4): cluster epoch averages x this validator's
 // share of the slots. The UI must label it estimated; we never present it as
 // exact.
@@ -735,6 +770,8 @@ export const buildFiles = (
 	phaseA: PhaseA[],
 	clusterEpochs: unknown,
 	epochFromIndex: number | null,
+	// The run's clock origin (same value the cadence clock uses).
+	nowMs: number,
 ): {
 	contents: Map<string, string>;
 	failed: string[];
@@ -808,7 +845,14 @@ export const buildFiles = (
 			}
 		};
 		put("ranks", ranksSection);
-		put("delinquency", sectionValue("delinquency"));
+		// Only an ok:true payload gets settled; a failure is published as-is.
+		const delinquency = sectionValue("delinquency");
+		put(
+			"delinquency",
+			delinquency !== undefined && delinquency.ok
+				? { ...delinquency, data: settleDelinquency(delinquency.data, nowMs) }
+				: delinquency,
+		);
 		put("blockRewards", sectionValue("blockRewards"));
 		put("bonds", sectionValue("bonds"));
 		put("software", buildSoftwareSection(info, sfdp));
@@ -1058,6 +1102,7 @@ const run = async () => {
 		phaseA,
 		clusterEpochs,
 		epochFromIndex,
+		nowMs,
 	);
 
 	const indexContent = serialize({
