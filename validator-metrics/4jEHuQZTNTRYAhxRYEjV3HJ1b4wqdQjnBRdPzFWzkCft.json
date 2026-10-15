@@ -178,9 +178,31 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1057,
+            "startAt": 1791934303840,
+            "endAt": 1792028028384,
+            "partial": false,
+            "delinquentMs": 529845,
+            "incidents": 2
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1791997722678,
+            "endedAt": 1791997995066,
+            "durationMs": 272388,
+            "startSlot": 456916150,
+            "endSlot": 456917276
+          },
+          {
+            "startedAt": 1791997497726,
+            "endedAt": 1791997755183,
+            "durationMs": 257457,
+            "startSlot": 456915073,
+            "endSlot": 456916169
+          },
           {
             "startedAt": 1790811357229,
             "endedAt": 1790812552657,
@@ -243,12 +265,12 @@
         "version": "26.9.6",
         "commissionPct": 0,
         "delinquent": false,
-        "lastVote": 456674128,
-        "rootSlot": 456674097,
+        "lastVote": 457067308,
+        "rootSlot": 457067277,
         "skipRatePct": 0,
-        "epochCredits": 801802,
-        "credits": 2647613638,
-        "activatedStakeSol": 461976.611475117,
+        "epochCredits": 180878,
+        "credits": 2653862608,
+        "activatedStakeSol": 461664.456161266,
         "sfdp": {
           "identity": "HW4zorvt6xDwhU36RqjcWNwU8YMj9tiqnAafBKW4cqV",
           "participant": {
@@ -324,13 +346,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1056,
-        "leaderSlotsPerEpoch": 456,
-        "blockRewardsSol": 7.37,
-        "mevSol": 2.27,
+        "epoch": 1057,
+        "leaderSlotsPerEpoch": 455,
+        "blockRewardsSol": 6.92,
+        "mevSol": 1.97,
         "commissionPct": 0,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0161605,
-        "clusterEpoch": 1056
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0152063,
+        "clusterEpoch": 1057
       }
     }
   }
