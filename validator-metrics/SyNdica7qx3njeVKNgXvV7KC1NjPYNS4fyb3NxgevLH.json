@@ -232,9 +232,32 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1063,
+            "startAt": 1792496287538,
+            "endAt": 1792589825112,
+            "partial": false,
+            "delinquentMs": 109600,
+            "incidents": 1
           }
         ],
-        "incidents": []
+        "incidents": [
+          {
+            "startedAt": 1792596146911,
+            "endedAt": 1792596335736,
+            "durationMs": 188825,
+            "startSlot": 459678379,
+            "endSlot": 459679067
+          },
+          {
+            "startedAt": 1792589715512,
+            "endedAt": 1792590817407,
+            "durationMs": 1101895,
+            "startSlot": 459648001,
+            "endSlot": 459653029
+          }
+        ]
       }
     },
     "blockRewards": {
@@ -255,15 +278,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.0",
+        "version": "4.3.2",
         "commissionPct": 0,
         "delinquent": false,
-        "lastVote": 459461182,
-        "rootSlot": 459461151,
+        "lastVote": 459863173,
+        "rootSlot": 459863173,
         "skipRatePct": 0,
-        "epochCredits": 3916815,
-        "credits": 2036845825,
-        "activatedStakeSol": 156844.939001578,
+        "epochCredits": 48,
+        "credits": 2039833916,
+        "activatedStakeSol": 156840.931841246,
         "sfdp": {
           "identity": "SyndicAgdEphcy5xhAKZAomTYhcF8xhC7za2UD9xeug",
           "participant": {

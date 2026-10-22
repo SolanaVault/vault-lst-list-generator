@@ -226,9 +226,32 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1063,
+            "startAt": 1792496287538,
+            "endAt": 1792589825112,
+            "partial": false,
+            "delinquentMs": 109200,
+            "incidents": 1
           }
         ],
-        "incidents": []
+        "incidents": [
+          {
+            "startedAt": 1792594671683,
+            "endedAt": 1792594898504,
+            "durationMs": 226821,
+            "startSlot": 459671252,
+            "endSlot": 459672293
+          },
+          {
+            "startedAt": 1792589715912,
+            "endedAt": 1792590817407,
+            "durationMs": 1101495,
+            "startSlot": 459648002,
+            "endSlot": 459653029
+          }
+        ]
       }
     },
     "blockRewards": {
@@ -249,14 +272,14 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.0",
+        "version": "4.3.2",
         "commissionPct": 0,
         "delinquent": false,
-        "lastVote": 459461182,
-        "rootSlot": 459461151,
+        "lastVote": 459863173,
+        "rootSlot": 459863173,
         "skipRatePct": 0,
-        "epochCredits": 3916911,
-        "credits": 2372514762,
+        "epochCredits": 64,
+        "credits": 2375502935,
         "activatedStakeSol": 10270.719978357,
         "sfdp": {
           "identity": "Xoir1BnQX9TbEvon9HRbD8tkjcD9dorsxmNjZAV64Re",
