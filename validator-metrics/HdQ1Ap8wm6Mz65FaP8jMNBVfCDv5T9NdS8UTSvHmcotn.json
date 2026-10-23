@@ -240,9 +240,24 @@
             "partial": false,
             "delinquentMs": 109200,
             "incidents": 1
+          },
+          {
+            "epoch": 1064,
+            "startAt": 1792589825112,
+            "endAt": 1792681625743,
+            "partial": false,
+            "delinquentMs": 1398220,
+            "incidents": 3
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1792681574943,
+            "endedAt": null,
+            "durationMs": 49405601,
+            "startSlot": 460079999,
+            "endSlot": null
+          },
           {
             "startedAt": 1792596461309,
             "endedAt": 1792596816434,
@@ -304,13 +319,13 @@
       "data": {
         "version": "4.3.2",
         "commissionPct": 0,
-        "delinquent": false,
-        "lastVote": 459863169,
-        "rootSlot": 459863169,
-        "skipRatePct": 0,
-        "epochCredits": 64,
-        "credits": 1963712346,
-        "activatedStakeSol": 115549.982389813,
+        "delinquent": true,
+        "lastVote": 460079999,
+        "rootSlot": 460079998,
+        "skipRatePct": null,
+        "epochCredits": 57219,
+        "credits": 19310712429,
+        "activatedStakeSol": 115579.733111086,
         "sfdp": {
           "identity": "8nbE53mcKhy74HLiGZ1q5HRocwiCvgh49csSaHSdtukr",
           "participant": {
