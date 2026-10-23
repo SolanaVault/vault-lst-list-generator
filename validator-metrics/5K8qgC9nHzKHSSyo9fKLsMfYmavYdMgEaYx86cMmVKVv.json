@@ -234,9 +234,24 @@
             "partial": false,
             "delinquentMs": 109600,
             "incidents": 1
+          },
+          {
+            "epoch": 1064,
+            "startAt": 1792589825112,
+            "endAt": 1792681625743,
+            "partial": false,
+            "delinquentMs": 1043095,
+            "incidents": 2
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1792681574943,
+            "endedAt": null,
+            "durationMs": 49481690,
+            "startSlot": 460079999,
+            "endSlot": null
+          },
           {
             "startedAt": 1792589715512,
             "endedAt": 1792590817407,
@@ -269,13 +284,13 @@
       "data": {
         "version": "4.3.0",
         "commissionPct": 0,
-        "delinquent": false,
-        "lastVote": 459863168,
-        "rootSlot": 459863168,
-        "skipRatePct": 0,
-        "epochCredits": 48,
-        "credits": 2722244470,
-        "activatedStakeSol": 99962.664412965,
+        "delinquent": true,
+        "lastVote": 460079999,
+        "rootSlot": 460079955,
+        "skipRatePct": null,
+        "epochCredits": 49500,
+        "credits": 15738997489,
+        "activatedStakeSol": 99963.584145839,
         "sfdp": {
           "identity": "uEhHSnCXvWgtgvVaYscPHjG13G3peMmngQQ2ghC54i3",
           "participant": {
@@ -352,8 +367,8 @@
       "data": {
         "basis": "cluster_epoch_average",
         "epoch": 1058,
-        "leaderSlotsPerEpoch": 98,
-        "blockRewardsSol": 1.68,
+        "leaderSlotsPerEpoch": 99,
+        "blockRewardsSol": 1.7,
         "mevSol": 0.49,
         "commissionPct": 0,
         "clusterAvgRewardsPerLeaderSlotSol": 0.0171895,
