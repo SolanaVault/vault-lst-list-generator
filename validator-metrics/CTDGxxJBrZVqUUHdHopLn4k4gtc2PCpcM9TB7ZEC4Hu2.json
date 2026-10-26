@@ -272,9 +272,25 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1068,
+            "startAt": 1792956544880,
+            "endAt": 1793048345292,
+            "partial": false,
+            "delinquentMs": 141315,
+            "incidents": 1
           }
         ],
-        "incidents": []
+        "incidents": [
+          {
+            "startedAt": 1793030833723,
+            "endedAt": 1793030975038,
+            "durationMs": 141315,
+            "startSlot": 461726078,
+            "endSlot": 461726641
+          }
+        ]
       }
     },
     "blockRewards": {
@@ -397,13 +413,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1067,
+        "epoch": 1068,
         "leaderSlotsPerEpoch": 41,
-        "blockRewardsSol": 0.4,
-        "mevSol": 0.1,
+        "blockRewardsSol": 0.56,
+        "mevSol": 0.14,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0096487,
-        "clusterEpoch": 1067
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0136335,
+        "clusterEpoch": 1068
       }
     }
   }
