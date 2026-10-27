@@ -17,6 +17,7 @@ import IDL from "./helpers/liquidUnstaker.json";
 import { fetchSafeJsonWithRetry, isSafeHttpsUrl } from "./helpers/safeUrl";
 import { restorePreviousMetadata } from "./helpers/merge";
 import { extractStoredRows, mergeVlpHistory } from "./helpers/vlpHistory";
+import { createFailoverConnection } from "./helpers/vendor/failoverRpcFetch";
 
 const LIQUID_UNSTAKER_POOL_ACCOUNT = new PublicKey(
   "9nyw5jxhzuSs88HxKJyDCsWBZMhxj2uNXsFcyHF5KBAb"
@@ -302,7 +303,14 @@ const getStakePoolAPY = async () => {
 };
 
 const run = async () => {
-  const connection = new Connection(process.env.RPC_URL!);
+  const rpcUrl = process.env.RPC_URL;
+  if (!rpcUrl) {
+    throw new Error("RPC_URL is not set; refusing to start without an RPC endpoint");
+  }
+  const connection = createFailoverConnection(
+    rpcUrl,
+    process.env.SOLANA_FALLBACK_RPC_URL || undefined,
+  );
 
   const files = [];
 

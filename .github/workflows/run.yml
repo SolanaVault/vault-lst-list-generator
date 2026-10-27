@@ -37,6 +37,7 @@ jobs:
         id: run-bot
         env:
           RPC_URL: ${{ secrets.RPC_URL }}
+          SOLANA_FALLBACK_RPC_URL: ${{ secrets.SOLANA_FALLBACK_RPC_URL }}
           GITHUB_TOKEN: ${{ github.token }}
           DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
         run: yarn start
