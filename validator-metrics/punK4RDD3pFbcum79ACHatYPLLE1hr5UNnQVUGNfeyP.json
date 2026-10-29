@@ -52,14 +52,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1041,
-            "startAt": 1790219008531,
-            "endAt": 1790283651631,
-            "partial": true,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1042,
             "startAt": 1790283651631,
             "endAt": 1790399340532,
@@ -282,6 +274,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1070,
+            "startAt": 1793140204813,
+            "endAt": 1793232245219,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": []
@@ -305,15 +305,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "26.10.4",
+        "version": "26.10.5",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 462314932,
-        "rootSlot": 462314932,
+        "lastVote": 462727185,
+        "rootSlot": 462727185,
         "skipRatePct": 0,
-        "epochCredits": 8831466482,
-        "credits": 268341806795,
-        "activatedStakeSol": 303714.992041382,
+        "epochCredits": 5334208443,
+        "credits": 307916093031,
+        "activatedStakeSol": 303938.701622275,
         "sfdp": {
           "identity": "SSmBEooM7RkmyuXxuKgAhTvhQZ36Z3G2WsmLGJKoQLY",
           "participant": {
@@ -389,13 +389,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1069,
-        "leaderSlotsPerEpoch": 300,
-        "blockRewardsSol": 3.71,
-        "mevSol": 0.99,
+        "epoch": 1070,
+        "leaderSlotsPerEpoch": 301,
+        "blockRewardsSol": 3.57,
+        "mevSol": 0.97,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0123712,
-        "clusterEpoch": 1069
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0118456,
+        "clusterEpoch": 1070
       }
     }
   }

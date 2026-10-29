@@ -58,14 +58,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1041,
-            "startAt": 1790219008531,
-            "endAt": 1790283651631,
-            "partial": true,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1042,
             "startAt": 1790283651631,
             "endAt": 1790399340532,
@@ -288,6 +280,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1070,
+            "startAt": 1793140204813,
+            "endAt": 1793232245219,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": []
@@ -351,15 +351,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.2",
+        "version": "4.4.0-rc.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 462314925,
-        "rootSlot": 462314909,
+        "lastVote": 462727178,
+        "rootSlot": 462727172,
         "skipRatePct": 0,
-        "epochCredits": 7098522115,
-        "credits": 269038460595,
-        "activatedStakeSol": 295389.755770825,
+        "epochCredits": 4681698217,
+        "credits": 310053866939,
+        "activatedStakeSol": 296523.993458937,
         "sfdp": {
           "identity": "AfZTWYoFQbzqCMmUBTD7XwxFvjob1FVyCvkaXRryxtKc",
           "participant": {
@@ -435,13 +435,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1069,
-        "leaderSlotsPerEpoch": 292,
-        "blockRewardsSol": 3.61,
-        "mevSol": 0.96,
+        "epoch": 1070,
+        "leaderSlotsPerEpoch": 293,
+        "blockRewardsSol": 3.47,
+        "mevSol": 0.94,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0123712,
-        "clusterEpoch": 1069
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0118456,
+        "clusterEpoch": 1070
       }
     }
   }

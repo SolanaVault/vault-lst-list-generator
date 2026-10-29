@@ -52,14 +52,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1041,
-            "startAt": 1790219008531,
-            "endAt": 1790283651631,
-            "partial": true,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1042,
             "startAt": 1790283651631,
             "endAt": 1790399340532,
@@ -282,6 +274,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1070,
+            "startAt": 1793140204813,
+            "endAt": 1793232245219,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -340,15 +340,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.2",
+        "version": "4.4.0-rc.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 462314931,
-        "rootSlot": 462314931,
-        "skipRatePct": 288.462,
-        "epochCredits": 13468016921,
-        "credits": 434679585766,
-        "activatedStakeSol": 508036.946149477,
+        "lastVote": 462727185,
+        "rootSlot": 462727185,
+        "skipRatePct": 0,
+        "epochCredits": 8329362745,
+        "credits": 499251476886,
+        "activatedStakeSol": 508283.965561457,
         "sfdp": {
           "identity": "fishfishrD9BwrQQiAcG6YeYZVUYVJf3tb9QGQPMJqF",
           "participant": {
@@ -424,13 +424,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1069,
-        "leaderSlotsPerEpoch": 502,
-        "blockRewardsSol": 6.21,
-        "mevSol": 1.66,
+        "epoch": 1070,
+        "leaderSlotsPerEpoch": 503,
+        "blockRewardsSol": 5.96,
+        "mevSol": 1.62,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0123712,
-        "clusterEpoch": 1069
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0118456,
+        "clusterEpoch": 1070
       }
     }
   }
