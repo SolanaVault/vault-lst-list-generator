@@ -58,14 +58,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1042,
-            "startAt": 1790283651631,
-            "endAt": 1790399340532,
-            "partial": false,
-            "delinquentMs": 288123,
-            "incidents": 2
-          },
-          {
             "epoch": 1043,
             "startAt": 1790399340532,
             "endAt": 1790515084431,
@@ -288,6 +280,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1071,
+            "startAt": 1793232245219,
+            "endAt": 1793324644418,
+            "partial": false,
+            "delinquentMs": 180645,
+            "incidents": 1
           }
         ],
         "incidents": [
@@ -395,20 +395,6 @@
             "durationMs": 115020,
             "startSlot": 451025551,
             "endSlot": 451025979
-          },
-          {
-            "startedAt": 1790336385255,
-            "endedAt": 1790336518458,
-            "durationMs": 133203,
-            "startSlot": 450341945,
-            "endSlot": 450342430
-          },
-          {
-            "startedAt": 1790316144059,
-            "endedAt": 1790316298979,
-            "durationMs": 154920,
-            "startSlot": 450265934,
-            "endSlot": 450266551
           }
         ]
       }
@@ -431,15 +417,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.2",
+        "version": "4.4.0-rc.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 462727185,
-        "rootSlot": 462727185,
+        "lastVote": 463131750,
+        "rootSlot": 463131750,
         "skipRatePct": 0,
-        "epochCredits": 2063902419,
-        "credits": 78231470368,
-        "activatedStakeSol": 69259.037269407,
+        "epochCredits": 889298059,
+        "credits": 87229796221,
+        "activatedStakeSol": 70016.272815128,
         "sfdp": {
           "identity": "vau1tt35joNg4WcuxxUfnojMg35kBmaLdiq5fcbfCZK",
           "participant": null,
@@ -512,13 +498,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1070,
+        "epoch": 1071,
         "leaderSlotsPerEpoch": 69,
-        "blockRewardsSol": 0.82,
-        "mevSol": 0.22,
+        "blockRewardsSol": 0.95,
+        "mevSol": 0.26,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0118456,
-        "clusterEpoch": 1070
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0137516,
+        "clusterEpoch": 1071
       }
     }
   }

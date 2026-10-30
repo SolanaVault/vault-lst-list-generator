@@ -52,14 +52,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1042,
-            "startAt": 1790283651631,
-            "endAt": 1790399340532,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1043,
             "startAt": 1790399340532,
             "endAt": 1790515084431,
@@ -282,6 +274,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1071,
+            "startAt": 1793232245219,
+            "endAt": 1793324644418,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": []
@@ -343,15 +343,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.3.2",
+        "version": "4.4.0-rc.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 462727178,
-        "rootSlot": 462725448,
+        "lastVote": 463131743,
+        "rootSlot": 463130973,
         "skipRatePct": 0,
-        "epochCredits": 3152147501,
-        "credits": 159587045370,
-        "activatedStakeSol": 169892.561876298,
+        "epochCredits": 1608025488,
+        "credits": 183746055714,
+        "activatedStakeSol": 167043.92115466,
         "sfdp": {
           "identity": "novaeuhY2JH2WHhc9KVTHDx2cyJZdXJC6faf4CtARZn",
           "participant": {
@@ -427,13 +427,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1070,
-        "leaderSlotsPerEpoch": 168,
-        "blockRewardsSol": 1.99,
-        "mevSol": 0.54,
+        "epoch": 1071,
+        "leaderSlotsPerEpoch": 166,
+        "blockRewardsSol": 2.28,
+        "mevSol": 0.63,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0118456,
-        "clusterEpoch": 1070
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0137516,
+        "clusterEpoch": 1071
       }
     }
   }
