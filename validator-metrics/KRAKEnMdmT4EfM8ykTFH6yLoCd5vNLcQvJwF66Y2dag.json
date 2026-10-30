@@ -1,7 +1,7 @@
 {
   "$schemaVersion": 1,
   "voteAccount": "KRAKEnMdmT4EfM8ykTFH6yLoCd5vNLcQvJwF66Y2dag",
-  "identity": "krakeNd6ednDPEXxHAmoBs1qKVM8kLg79PvWF2mhXV1",
+  "identity": "GzDfKKoZ6E8ReqKfH96k5bkmA6CEWtnUrQnZjSqW4ZzG",
   "epoch": 1056,
   "sections": {
     "ranks": {
@@ -51,22 +51,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1041,
-            "startAt": 1790219008531,
-            "endAt": 1790283651631,
-            "partial": true,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
-            "epoch": 1042,
-            "startAt": 1790283651631,
-            "endAt": 1790399340532,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1043,
             "startAt": 1790399340532,
@@ -274,9 +258,41 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1069,
+            "startAt": 1793048345292,
+            "endAt": 1793140204813,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
+          },
+          {
+            "epoch": 1070,
+            "startAt": 1793140204813,
+            "endAt": 1793232245219,
+            "partial": false,
+            "delinquentMs": 684615,
+            "incidents": 1
+          },
+          {
+            "epoch": 1071,
+            "startAt": 1793232245219,
+            "endAt": 1793324644418,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
-        "incidents": []
+        "incidents": [
+          {
+            "startedAt": 1793188210467,
+            "endedAt": 1793188895082,
+            "durationMs": 684615,
+            "startSlot": 462465699,
+            "endSlot": 462468942
+          }
+        ]
       }
     },
     "blockRewards": {
@@ -300,12 +316,12 @@
         "version": "4.3.2",
         "commissionPct": 10,
         "delinquent": false,
-        "lastVote": 461489581,
-        "rootSlot": 461489581,
-        "skipRatePct": 37.313,
-        "epochCredits": 120750173501,
-        "credits": 2076314053590,
-        "activatedStakeSol": 3379462.054551264,
+        "lastVote": 463131750,
+        "rootSlot": 463131750,
+        "skipRatePct": 136.364,
+        "epochCredits": 30805665078,
+        "credits": 3898682877278,
+        "activatedStakeSol": 3383082.371365696,
         "sfdp": {
           "identity": "krakeNd6ednDPEXxHAmoBs1qKVM8kLg79PvWF2mhXV1",
           "participant": null,
@@ -378,13 +394,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1068,
-        "leaderSlotsPerEpoch": 3335,
-        "blockRewardsSol": 45.47,
-        "mevSol": 11.42,
+        "epoch": 1071,
+        "leaderSlotsPerEpoch": 3357,
+        "blockRewardsSol": 46.16,
+        "mevSol": 12.72,
         "commissionPct": 10,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0136335,
-        "clusterEpoch": 1068
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0137516,
+        "clusterEpoch": 1071
       }
     }
   }
