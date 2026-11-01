@@ -52,14 +52,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1044,
-            "startAt": 1790515084431,
-            "endAt": 1790630979810,
-            "partial": false,
-            "delinquentMs": 443355,
-            "incidents": 2
-          },
-          {
             "epoch": 1045,
             "startAt": 1790630979810,
             "endAt": 1790746574556,
@@ -282,6 +274,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1073,
+            "startAt": 1793417104570,
+            "endAt": 1793509564801,
+            "partial": false,
+            "delinquentMs": 812935,
+            "incidents": 1
           }
         ],
         "incidents": [
@@ -319,20 +319,6 @@
             "durationMs": 268219,
             "startSlot": 454107660,
             "endSlot": 454108634
-          },
-          {
-            "startedAt": 1790603056942,
-            "endedAt": 1790603378644,
-            "durationMs": 321702,
-            "startSlot": 451336223,
-            "endSlot": 451337371
-          },
-          {
-            "startedAt": 1790602655538,
-            "endedAt": 1790602777191,
-            "durationMs": 121653,
-            "startSlot": 451334700,
-            "endSlot": 451335179
           }
         ]
       }
@@ -355,15 +341,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.4.0-rc.1",
+        "version": "4.4.0",
         "commissionPct": 0,
         "delinquent": false,
-        "lastVote": 463531205,
-        "rootSlot": 463531205,
+        "lastVote": 463933235,
+        "rootSlot": 463933235,
         "skipRatePct": 0,
-        "epochCredits": 9226846449,
-        "credits": 93869318776,
-        "activatedStakeSol": 73130.770051914,
+        "epochCredits": 9123946742,
+        "credits": 103628893269,
+        "activatedStakeSol": 73082.643394123,
         "sfdp": {
           "identity": "7knvB4bbqHCKuNp3ef2hJWdwqoH6WAUi55NQt6LdRfkx",
           "participant": {
