@@ -52,14 +52,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1045,
-            "startAt": 1790630979810,
-            "endAt": 1790746574556,
-            "partial": false,
-            "delinquentMs": 145663,
-            "incidents": 1
-          },
-          {
             "epoch": 1046,
             "startAt": 1790746574556,
             "endAt": 1790862085268,
@@ -282,9 +274,24 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1074,
+            "startAt": 1793509564801,
+            "endAt": 1793602146109,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1793606340675,
+            "endedAt": 1793607275025,
+            "durationMs": 934350,
+            "startSlot": 464420136,
+            "endSlot": 464424382
+          },
           {
             "startedAt": 1792394495797,
             "endedAt": 1792395673142,
@@ -333,13 +340,6 @@
             "durationMs": 249268,
             "startSlot": 452194685,
             "endSlot": 452195593
-          },
-          {
-            "startedAt": 1790631465511,
-            "endedAt": 1790631611174,
-            "durationMs": 145663,
-            "startSlot": 451442084,
-            "endSlot": 451442628
           }
         ]
       }
