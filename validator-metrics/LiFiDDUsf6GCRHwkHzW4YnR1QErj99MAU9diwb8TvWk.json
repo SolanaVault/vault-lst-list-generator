@@ -2,44 +2,48 @@
   "$schemaVersion": 1,
   "voteAccount": "LiFiDDUsf6GCRHwkHzW4YnR1QErj99MAU9diwb8TvWk",
   "identity": "LiFiDJwJjW98MB8wxcnXpafKYsuz1hwpUkuszkERiX6",
-  "epoch": 1056,
+  "epoch": 1076,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1056,
-        "stakeSol": 107451.460440347,
-        "creditsLastEpoch": 6901411,
+        "epoch": 1076,
+        "stakeSol": 107357.153910414,
+        "creditsLastEpoch": null,
+        "voteScore": {
+          "epoch": 1075,
+          "scorePct": 95.84354669430184
+        },
         "country": "Hong Kong",
         "continent": "Asia",
         "stake": {
           "global": {
-            "rank": 488,
-            "of": 680
+            "rank": 472,
+            "of": 693
           },
           "vault": null,
           "country": {
             "rank": 16,
-            "of": 16
+            "of": 18
           },
           "continent": {
-            "rank": 81,
-            "of": 117
+            "rank": 71,
+            "of": 115
           }
         },
         "performance": {
           "global": {
-            "rank": 577,
-            "of": 680
+            "rank": 622,
+            "of": 694
           },
           "vault": null,
           "country": {
-            "rank": 8,
-            "of": 16
+            "rank": 16,
+            "of": 18
           },
           "continent": {
-            "rank": 79,
-            "of": 117
+            "rank": 111,
+            "of": 115
           }
         }
       }
@@ -51,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1046,
-            "startAt": 1790746574556,
-            "endAt": 1790862085268,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1047,
             "startAt": 1790862085268,
@@ -282,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1075,
+            "startAt": 1793602146109,
+            "endAt": 1793694604763,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": []
@@ -326,12 +330,12 @@
         "version": "4.4.0-rc.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 464339588,
-        "rootSlot": 464339429,
+        "lastVote": 464764062,
+        "rootSlot": 464764005,
         "skipRatePct": 0,
-        "epochCredits": 13074972111,
-        "credits": 154691626923,
-        "activatedStakeSol": 105836.686242834,
+        "epochCredits": 12977376842,
+        "credits": 170343439138,
+        "activatedStakeSol": 106035.1013161,
         "sfdp": {
           "identity": "LiFiDJwJjW98MB8wxcnXpafKYsuz1hwpUkuszkERiX6",
           "participant": {
@@ -407,13 +411,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1073,
-        "leaderSlotsPerEpoch": 105,
-        "blockRewardsSol": 0.86,
-        "mevSol": 0.2,
+        "epoch": 1075,
+        "leaderSlotsPerEpoch": 106,
+        "blockRewardsSol": 1.22,
+        "mevSol": 0.31,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.008209,
-        "clusterEpoch": 1073
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
+        "clusterEpoch": 1075
       }
     }
   }
