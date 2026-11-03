@@ -2,50 +2,54 @@
   "$schemaVersion": 1,
   "voteAccount": "9f7dqiYNBZbgPesAnLeWnKCtxYHSfMg5x1EMZCJwVwG7",
   "identity": "FwnWx7x99rGwLmipzz8ii15NqcHkKRo2oS1Y7j6LivgZ",
-  "epoch": 1056,
+  "epoch": 1076,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1056,
-        "stakeSol": 220838.317925321,
-        "creditsLastEpoch": 6903405,
+        "epoch": 1076,
+        "stakeSol": 232037.74308469,
+        "creditsLastEpoch": null,
+        "voteScore": {
+          "epoch": 1075,
+          "scorePct": 101.10462578775584
+        },
         "country": "The Netherlands",
         "continent": "Europe",
         "stake": {
           "global": {
-            "rank": 258,
-            "of": 680
+            "rank": 250,
+            "of": 693
           },
           "vault": {
-            "rank": 36,
-            "of": 161
+            "rank": 34,
+            "of": 159
           },
           "country": {
-            "rank": 43,
-            "of": 89
+            "rank": 42,
+            "of": 95
           },
           "continent": {
-            "rank": 184,
-            "of": 420
+            "rank": 175,
+            "of": 423
           }
         },
         "performance": {
           "global": {
-            "rank": 208,
-            "of": 680
+            "rank": 358,
+            "of": 694
           },
           "vault": {
-            "rank": 69,
-            "of": 161
+            "rank": 80,
+            "of": 159
           },
           "country": {
-            "rank": 44,
-            "of": 89
+            "rank": 53,
+            "of": 95
           },
           "continent": {
-            "rank": 184,
-            "of": 420
+            "rank": 240,
+            "of": 423
           }
         }
       }
@@ -57,14 +61,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1046,
-            "startAt": 1790746574556,
-            "endAt": 1790862085268,
-            "partial": false,
-            "delinquentMs": 159506,
-            "incidents": 1
-          },
           {
             "epoch": 1047,
             "startAt": 1790862085268,
@@ -288,6 +284,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1075,
+            "startAt": 1793602146109,
+            "endAt": 1793694604763,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -325,13 +329,6 @@
             "durationMs": 293042,
             "startSlot": 459797587,
             "endSlot": 459798790
-          },
-          {
-            "startedAt": 1790767515320,
-            "endedAt": 1790767674826,
-            "durationMs": 159506,
-            "startSlot": 451950631,
-            "endSlot": 451951170
           }
         ]
       }
@@ -397,12 +394,12 @@
         "version": "26.10.5",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 464339595,
-        "rootSlot": 464339595,
+        "lastVote": 464764069,
+        "rootSlot": 464764069,
         "skipRatePct": 0,
-        "epochCredits": 26460345058,
-        "credits": 329526826902,
-        "activatedStakeSol": 229991.564637667,
+        "epochCredits": 26729269531,
+        "credits": 360030491837,
+        "activatedStakeSol": 230503.105928247,
         "sfdp": {
           "identity": "FwnWx7x99rGwLmipzz8ii15NqcHkKRo2oS1Y7j6LivgZ",
           "participant": {
@@ -478,13 +475,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1073,
+        "epoch": 1075,
         "leaderSlotsPerEpoch": 229,
-        "blockRewardsSol": 1.88,
-        "mevSol": 0.44,
+        "blockRewardsSol": 2.64,
+        "mevSol": 0.68,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.008209,
-        "clusterEpoch": 1073
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
+        "clusterEpoch": 1075
       }
     }
   }
