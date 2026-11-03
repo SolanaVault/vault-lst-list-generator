@@ -2,49 +2,53 @@
   "$schemaVersion": 1,
   "voteAccount": "mALLoAbdQrgsnm7kWJyPrhcQcmxfT73t8DaqEkpZNd6",
   "identity": "mALL2W6DUgDDtcyurC9v5YTF2CMMeuRwPBkf6tEoG3y",
-  "epoch": 1056,
+  "epoch": 1076,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1056,
-        "stakeSol": 98063.574614676,
-        "creditsLastEpoch": 6893985,
+        "epoch": 1076,
+        "stakeSol": 103955.852478915,
+        "creditsLastEpoch": null,
+        "voteScore": {
+          "epoch": 1075,
+          "scorePct": 99.4131642804706
+        },
         "country": "Brazil",
         "continent": "South America",
         "stake": {
           "global": {
-            "rank": 518,
-            "of": 680
+            "rank": 480,
+            "of": 693
           },
           "vault": {
-            "rank": 136,
-            "of": 161
+            "rank": 125,
+            "of": 159
           },
           "country": {
-            "rank": 6,
+            "rank": 8,
             "of": 13
           },
           "continent": {
-            "rank": 7,
+            "rank": 9,
             "of": 14
           }
         },
         "performance": {
           "global": {
-            "rank": 638,
-            "of": 680
+            "rank": 573,
+            "of": 694
           },
           "vault": {
-            "rank": 157,
-            "of": 161
+            "rank": 134,
+            "of": 159
           },
           "country": {
-            "rank": 12,
+            "rank": 10,
             "of": 13
           },
           "continent": {
-            "rank": 13,
+            "rank": 11,
             "of": 14
           }
         }
@@ -57,14 +61,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1046,
-            "startAt": 1790746574556,
-            "endAt": 1790862085268,
-            "partial": false,
-            "delinquentMs": 444844,
-            "incidents": 1
-          },
           {
             "epoch": 1047,
             "startAt": 1790862085268,
@@ -288,6 +284,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1075,
+            "startAt": 1793602146109,
+            "endAt": 1793694604763,
+            "partial": false,
+            "delinquentMs": 884417,
+            "incidents": 2
           }
         ],
         "incidents": [
@@ -325,13 +329,6 @@
             "durationMs": 501859,
             "startSlot": 454618925,
             "endSlot": 454620802
-          },
-          {
-            "startedAt": 1790748150119,
-            "endedAt": 1790748594963,
-            "durationMs": 444844,
-            "startSlot": 451878028,
-            "endSlot": 451879767
           }
         ]
       }
@@ -372,15 +369,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.4.0-rc.1",
+        "version": "26.10.5",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 464339588,
-        "rootSlot": 464335188,
+        "lastVote": 464764062,
+        "rootSlot": 464763479,
         "skipRatePct": 0,
-        "epochCredits": 13798099588,
-        "credits": 156568552868,
-        "activatedStakeSol": 101203.90295889,
+        "epochCredits": 11597875574,
+        "credits": 170347471732,
+        "activatedStakeSol": 102295.615554452,
         "sfdp": {
           "identity": "mALL2W6DUgDDtcyurC9v5YTF2CMMeuRwPBkf6tEoG3y",
           "participant": {
@@ -456,13 +453,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1073,
-        "leaderSlotsPerEpoch": 101,
-        "blockRewardsSol": 0.83,
-        "mevSol": 0.2,
+        "epoch": 1075,
+        "leaderSlotsPerEpoch": 102,
+        "blockRewardsSol": 1.17,
+        "mevSol": 0.3,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.008209,
-        "clusterEpoch": 1073
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
+        "clusterEpoch": 1075
       }
     }
   }
