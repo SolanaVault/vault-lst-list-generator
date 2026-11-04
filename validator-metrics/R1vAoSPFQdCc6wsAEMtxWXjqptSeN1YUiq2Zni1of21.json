@@ -5,36 +5,9 @@
   "epoch": 1076,
   "sections": {
     "ranks": {
-      "ok": true,
-      "data": {
-        "epoch": 1076,
-        "stakeSol": 2.874183724,
-        "creditsLastEpoch": null,
-        "voteScore": {
-          "epoch": 1075,
-          "scorePct": 0
-        },
-        "country": null,
-        "continent": null,
-        "stake": {
-          "global": {
-            "rank": 668,
-            "of": 693
-          },
-          "vault": null,
-          "country": null,
-          "continent": null
-        },
-        "performance": {
-          "global": {
-            "rank": 692,
-            "of": 694
-          },
-          "vault": null,
-          "country": null,
-          "continent": null
-        }
-      }
+      "ok": false,
+      "reason": "not_found",
+      "detail": "vote account not found in current voting set"
     },
     "delinquency": {
       "ok": true,
@@ -43,14 +16,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1047,
-            "startAt": 1790862085268,
-            "endAt": 1790977861880,
-            "partial": false,
-            "delinquentMs": 115776612,
-            "incidents": 1
-          },
           {
             "epoch": 1048,
             "startAt": 1790977861880,
@@ -274,13 +239,21 @@
             "partial": false,
             "delinquentMs": 92458654,
             "incidents": 1
+          },
+          {
+            "epoch": 1076,
+            "startAt": 1793694604763,
+            "endAt": 1793787184447,
+            "partial": false,
+            "delinquentMs": 92579684,
+            "incidents": 1
           }
         ],
         "incidents": [
           {
             "startedAt": 1763878180531,
             "endedAt": null,
-            "durationMs": 29895278071,
+            "durationMs": 29943521562,
             "startSlot": 384048870,
             "endSlot": null
           }
@@ -403,13 +376,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1075,
+        "epoch": 1076,
         "leaderSlotsPerEpoch": 0,
         "blockRewardsSol": 0,
         "mevSol": 0,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
-        "clusterEpoch": 1075
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0127658,
+        "clusterEpoch": 1076
       }
     }
   }
