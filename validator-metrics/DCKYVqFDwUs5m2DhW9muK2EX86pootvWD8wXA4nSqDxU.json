@@ -2,23 +2,23 @@
   "$schemaVersion": 1,
   "voteAccount": "DCKYVqFDwUs5m2DhW9muK2EX86pootvWD8wXA4nSqDxU",
   "identity": "DCKyEmMENQMtLXgbmUoHRmgP9XdJ9HsR5WxrKnSDCzKA",
-  "epoch": 1076,
+  "epoch": 1077,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1076,
-        "stakeSol": 99530.21783171,
+        "epoch": 1077,
+        "stakeSol": 99303.526968329,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1075,
-          "scorePct": 101.13273110061817
+          "epoch": 1076,
+          "scorePct": 98.83318121545346
         },
         "country": "Japan",
         "continent": "Asia",
         "stake": {
           "global": {
-            "rank": 493,
+            "rank": 494,
             "of": 693
           },
           "vault": null,
@@ -33,16 +33,16 @@
         },
         "performance": {
           "global": {
-            "rank": 332,
-            "of": 694
+            "rank": 543,
+            "of": 693
           },
           "vault": null,
           "country": {
-            "rank": 25,
+            "rank": 40,
             "of": 52
           },
           "continent": {
-            "rank": 42,
+            "rank": 90,
             "of": 115
           }
         }
@@ -55,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1047,
-            "startAt": 1790862085268,
-            "endAt": 1790977861880,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1048,
             "startAt": 1790977861880,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1076,
+            "startAt": 1793694604763,
+            "endAt": 1793787184447,
+            "partial": false,
+            "delinquentMs": 707316,
+            "incidents": 1
           }
         ],
         "incidents": [
@@ -433,13 +433,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1075,
+        "epoch": 1076,
         "leaderSlotsPerEpoch": 99,
-        "blockRewardsSol": 1.14,
-        "mevSol": 0.29,
+        "blockRewardsSol": 1.26,
+        "mevSol": 0.35,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
-        "clusterEpoch": 1075
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0127658,
+        "clusterEpoch": 1076
       }
     }
   }
