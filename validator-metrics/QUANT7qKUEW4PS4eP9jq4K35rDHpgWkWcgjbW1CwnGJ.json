@@ -1,7 +1,7 @@
 {
   "$schemaVersion": 1,
   "voteAccount": "QUANT7qKUEW4PS4eP9jq4K35rDHpgWkWcgjbW1CwnGJ",
-  "identity": "Atom7LRkdXj6MBoWJPgjaetrCMrgB9nnkQBYXTWE8Z3S",
+  "identity": "QTTyCVxoNycfxjREkE1xFa5xbek2Eh6ri63X6H5Cud6",
   "epoch": 1076,
   "sections": {
     "ranks": {
@@ -55,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1047,
-            "startAt": 1790862085268,
-            "endAt": 1790977861880,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1048,
             "startAt": 1790977861880,
@@ -286,9 +278,24 @@
             "partial": false,
             "delinquentMs": 96660,
             "incidents": 1
+          },
+          {
+            "epoch": 1076,
+            "startAt": 1793694604763,
+            "endAt": 1793787184447,
+            "partial": false,
+            "delinquentMs": 1717922,
+            "incidents": 4
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1793766871167,
+            "endedAt": 1793767054470,
+            "durationMs": 183303,
+            "startSlot": 465169463,
+            "endSlot": 465170262
+          },
           {
             "startedAt": 1793718730721,
             "endedAt": 1793719054992,
@@ -336,12 +343,12 @@
         "version": "4.4.0",
         "commissionPct": 80,
         "delinquent": false,
-        "lastVote": 464764069,
-        "rootSlot": 464764069,
+        "lastVote": 465563672,
+        "rootSlot": 465563672,
         "skipRatePct": 0,
-        "epochCredits": 4338516809,
-        "credits": 45567151972,
-        "activatedStakeSol": 23851.142109396,
+        "epochCredits": 2341905060,
+        "credits": 51017678384,
+        "activatedStakeSol": 23852.631536855,
         "sfdp": {
           "identity": "Atom7LRkdXj6MBoWJPgjaetrCMrgB9nnkQBYXTWE8Z3S",
           "participant": null,
@@ -414,13 +421,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1075,
+        "epoch": 1076,
         "leaderSlotsPerEpoch": 24,
-        "blockRewardsSol": 0.28,
-        "mevSol": 0.07,
+        "blockRewardsSol": 0.31,
+        "mevSol": 0.09,
         "commissionPct": 80,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0115112,
-        "clusterEpoch": 1075
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0127658,
+        "clusterEpoch": 1076
       }
     }
   }
