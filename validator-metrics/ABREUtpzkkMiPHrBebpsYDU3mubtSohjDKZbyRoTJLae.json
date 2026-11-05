@@ -2,24 +2,24 @@
   "$schemaVersion": 1,
   "voteAccount": "ABREUtpzkkMiPHrBebpsYDU3mubtSohjDKZbyRoTJLae",
   "identity": "ABREU5YkQcfpDZymoQ97iGUgQcfgjctWUUxEMfumiPdV",
-  "epoch": 1077,
+  "epoch": 1078,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1077,
-        "stakeSol": 93979.976310815,
+        "epoch": 1078,
+        "stakeSol": 98733.248051663,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1076,
-          "scorePct": 90.13643299284297
+          "epoch": 1077,
+          "scorePct": 96.33565555191785
         },
         "country": "Brazil",
         "continent": "South America",
         "stake": {
           "global": {
-            "rank": 508,
-            "of": 693
+            "rank": 496,
+            "of": 694
           },
           "vault": null,
           "country": {
@@ -33,7 +33,7 @@
         },
         "performance": {
           "global": {
-            "rank": 637,
+            "rank": 608,
             "of": 693
           },
           "vault": null,
@@ -55,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1048,
-            "startAt": 1790977861880,
-            "endAt": 1791093286507,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1049,
             "startAt": 1791093286507,
@@ -286,9 +278,24 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1077,
+            "startAt": 1793787184447,
+            "endAt": 1793879704873,
+            "partial": false,
+            "delinquentMs": 219990,
+            "incidents": 1
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1793892967269,
+            "endedAt": 1793893414629,
+            "durationMs": 447360,
+            "startSlot": 465758505,
+            "endSlot": 465760475
+          },
           {
             "startedAt": 1793847594689,
             "endedAt": 1793847814679,
@@ -482,13 +489,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1076,
+        "epoch": 1077,
         "leaderSlotsPerEpoch": 94,
-        "blockRewardsSol": 1.2,
-        "mevSol": 0.34,
+        "blockRewardsSol": 1.17,
+        "mevSol": 0.32,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0127658,
-        "clusterEpoch": 1076
+        "clusterAvgRewardsPerLeaderSlotSol": 0.012428,
+        "clusterEpoch": 1077
       }
     }
   }
