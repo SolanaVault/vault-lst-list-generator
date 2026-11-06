@@ -2,24 +2,24 @@
   "$schemaVersion": 1,
   "voteAccount": "FdGcvmbpebUwYA3vSywnagsaC3Tq3pAVmcR6VoxVcdV9",
   "identity": "BCeczqpTRPigndHVJu1KEzno1Uhb4hjrE7ttmAndrV1p",
-  "epoch": 1078,
+  "epoch": 1079,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1078,
-        "stakeSol": 189212.719887833,
+        "epoch": 1079,
+        "stakeSol": 189211.347340059,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1077,
-          "scorePct": 100.75782154844359
+          "epoch": 1078,
+          "scorePct": 95.64518921207237
         },
         "country": "United States",
         "continent": "North America",
         "stake": {
           "global": {
             "rank": 311,
-            "of": 694
+            "of": 696
           },
           "vault": null,
           "country": {
@@ -33,16 +33,16 @@
         },
         "performance": {
           "global": {
-            "rank": 208,
-            "of": 693
+            "rank": 615,
+            "of": 694
           },
           "vault": null,
           "country": {
-            "rank": 28,
+            "rank": 103,
             "of": 113
           },
           "continent": {
-            "rank": 33,
+            "rank": 117,
             "of": 127
           }
         }
@@ -55,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1049,
-            "startAt": 1791093286507,
-            "endAt": 1791208902681,
-            "partial": false,
-            "delinquentMs": 183705,
-            "incidents": 1
-          },
           {
             "epoch": 1050,
             "startAt": 1791208902681,
@@ -286,17 +278,17 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1078,
+            "startAt": 1793879704873,
+            "endAt": 1793972105366,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
-        "incidents": [
-          {
-            "startedAt": 1791146893890,
-            "endedAt": 1791147077595,
-            "durationMs": 183705,
-            "startSlot": 453368452,
-            "endSlot": 453369119
-          }
-        ]
+        "incidents": []
       }
     },
     "blockRewards": {
@@ -423,13 +415,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1077,
+        "epoch": 1078,
         "leaderSlotsPerEpoch": 190,
-        "blockRewardsSol": 2.36,
+        "blockRewardsSol": 2.35,
         "mevSol": 0.64,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.012428,
-        "clusterEpoch": 1077
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0123903,
+        "clusterEpoch": 1078
       }
     }
   }
