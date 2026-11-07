@@ -62,14 +62,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1050,
-            "startAt": 1791208902681,
-            "endAt": 1791324882093,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1051,
             "startAt": 1791324882093,
             "endAt": 1791440923155,
@@ -292,6 +284,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1079,
+            "startAt": 1793972105366,
+            "endAt": 1794064744853,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": []
@@ -302,20 +302,6 @@
       "data": {
         "votePubkey": "1oH9rfyrbKoP7ucJ1Zr2HLHmDU8N6G1G6dEuruFsSqy",
         "epochs": [
-          {
-            "epoch": 1065,
-            "identity": "EPFZFVrXuveEQar9LaEkt5kDRPMnbvK54qu5FwCxpkcy",
-            "scheduledSlots": 112,
-            "checkedSlots": 112,
-            "checkedThroughSlot": 460479899,
-            "producedBlocks": 109,
-            "rewardSol": 0.890332096,
-            "complete": true,
-            "biggestBlock": {
-              "slot": 460207648,
-              "sol": 0.049949884
-            }
-          },
           {
             "epoch": 1066,
             "identity": "EPFZFVrXuveEQar9LaEkt5kDRPMnbvK54qu5FwCxpkcy",
@@ -502,117 +488,131 @@
             "epoch": 1079,
             "identity": "EPFZFVrXuveEQar9LaEkt5kDRPMnbvK54qu5FwCxpkcy",
             "scheduledSlots": 132,
-            "checkedSlots": 124,
-            "checkedThroughSlot": 466514163,
-            "producedBlocks": 124,
-            "rewardSol": 0.823567332,
-            "complete": false,
+            "checkedSlots": 132,
+            "checkedThroughSlot": 466542931,
+            "producedBlocks": 132,
+            "rewardSol": 0.918915611,
+            "complete": true,
             "biggestBlock": {
               "slot": 466340556,
               "sol": 0.154609329
+            }
+          },
+          {
+            "epoch": 1080,
+            "identity": "EPFZFVrXuveEQar9LaEkt5kDRPMnbvK54qu5FwCxpkcy",
+            "scheduledSlots": 92,
+            "checkedSlots": 40,
+            "checkedThroughSlot": 466654259,
+            "producedBlocks": 40,
+            "rewardSol": 0.377204335,
+            "complete": false,
+            "biggestBlock": {
+              "slot": 466586626,
+              "sol": 0.040640032
             }
           }
         ],
         "recentBlocks": [
           {
-            "slot": 466463920,
-            "epoch": 1079,
-            "sol": 0.002361027
+            "slot": 466641664,
+            "epoch": 1080,
+            "sol": 0.01511699
           },
           {
-            "slot": 466463921,
-            "epoch": 1079,
-            "sol": 0.000882677
+            "slot": 466641665,
+            "epoch": 1080,
+            "sol": 0.005060539
           },
           {
-            "slot": 466463922,
-            "epoch": 1079,
-            "sol": 0.001308842
+            "slot": 466641666,
+            "epoch": 1080,
+            "sol": 0.004555681
           },
           {
-            "slot": 466463923,
-            "epoch": 1079,
-            "sol": 0.002551704
+            "slot": 466641667,
+            "epoch": 1080,
+            "sol": 0.003539105
           },
           {
-            "slot": 466475944,
-            "epoch": 1079,
-            "sol": 0.001463622
+            "slot": 466643644,
+            "epoch": 1080,
+            "sol": 0.029611154
           },
           {
-            "slot": 466475945,
-            "epoch": 1079,
-            "sol": 0.001814661
+            "slot": 466643645,
+            "epoch": 1080,
+            "sol": 0.010939321
           },
           {
-            "slot": 466475946,
-            "epoch": 1079,
-            "sol": 0.009049771
+            "slot": 466643646,
+            "epoch": 1080,
+            "sol": 0.008109969
           },
           {
-            "slot": 466475947,
-            "epoch": 1079,
-            "sol": 0.011984446
+            "slot": 466643647,
+            "epoch": 1080,
+            "sol": 0.008760299
           },
           {
-            "slot": 466499184,
-            "epoch": 1079,
-            "sol": 0.001902181
+            "slot": 466648108,
+            "epoch": 1080,
+            "sol": 0.01149702
           },
           {
-            "slot": 466499185,
-            "epoch": 1079,
-            "sol": 0.001866114
+            "slot": 466648109,
+            "epoch": 1080,
+            "sol": 0.010037293
           },
           {
-            "slot": 466499186,
-            "epoch": 1079,
-            "sol": 0.001826202
+            "slot": 466648110,
+            "epoch": 1080,
+            "sol": 0.010173077
           },
           {
-            "slot": 466499187,
-            "epoch": 1079,
-            "sol": 0.002528678
+            "slot": 466648111,
+            "epoch": 1080,
+            "sol": 0.006356364
           },
           {
-            "slot": 466502680,
-            "epoch": 1079,
-            "sol": 0.003470099
+            "slot": 466650452,
+            "epoch": 1080,
+            "sol": 0.009566948
           },
           {
-            "slot": 466502681,
-            "epoch": 1079,
-            "sol": 0.002372479
+            "slot": 466650453,
+            "epoch": 1080,
+            "sol": 0.006558951
           },
           {
-            "slot": 466502682,
-            "epoch": 1079,
-            "sol": 0.002434231
+            "slot": 466650454,
+            "epoch": 1080,
+            "sol": 0.03402885
           },
           {
-            "slot": 466502683,
-            "epoch": 1079,
-            "sol": 0.001903867
+            "slot": 466650455,
+            "epoch": 1080,
+            "sol": 0.004226774
           },
           {
-            "slot": 466514160,
-            "epoch": 1079,
-            "sol": 0.00271112
+            "slot": 466654256,
+            "epoch": 1080,
+            "sol": 0.005375568
           },
           {
-            "slot": 466514161,
-            "epoch": 1079,
-            "sol": 0.001743497
+            "slot": 466654257,
+            "epoch": 1080,
+            "sol": 0.002978537
           },
           {
-            "slot": 466514162,
-            "epoch": 1079,
-            "sol": 0.001081087
+            "slot": 466654258,
+            "epoch": 1080,
+            "sol": 0.004995465
           },
           {
-            "slot": 466514163,
-            "epoch": 1079,
-            "sol": 0.002003082
+            "slot": 466654259,
+            "epoch": 1080,
+            "sol": 0.002397839
           }
         ]
       }
@@ -756,13 +756,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1078,
+        "epoch": 1079,
         "leaderSlotsPerEpoch": 108,
-        "blockRewardsSol": 1.34,
-        "mevSol": 0.37,
+        "blockRewardsSol": 1.17,
+        "mevSol": 0.33,
         "commissionPct": 0,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0123903,
-        "clusterEpoch": 1078
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0107978,
+        "clusterEpoch": 1079
       }
     }
   }
