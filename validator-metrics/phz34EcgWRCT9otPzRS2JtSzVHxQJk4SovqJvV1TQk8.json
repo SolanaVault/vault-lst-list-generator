@@ -2,28 +2,28 @@
   "$schemaVersion": 1,
   "voteAccount": "phz34EcgWRCT9otPzRS2JtSzVHxQJk4SovqJvV1TQk8",
   "identity": "phz1CRbEsCtFCh2Ro5tjyu588VU1WPMwW9BJS9yFNn2",
-  "epoch": 1083,
+  "epoch": 1084,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1083,
-        "stakeSol": 129464.717239881,
+        "epoch": 1084,
+        "stakeSol": 129491.032631131,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1082,
-          "scorePct": 99.12450043352567
+          "epoch": 1083,
+          "scorePct": 100.32488130024879
         },
         "country": "Japan",
         "continent": "Asia",
         "stake": {
           "global": {
-            "rank": 422,
-            "of": 699
+            "rank": 420,
+            "of": 698
           },
           "vault": {
             "rank": 101,
-            "of": 159
+            "of": 158
           },
           "country": {
             "rank": 22,
@@ -36,19 +36,19 @@
         },
         "performance": {
           "global": {
-            "rank": 489,
-            "of": 698
+            "rank": 202,
+            "of": 699
           },
           "vault": {
-            "rank": 106,
+            "rank": 66,
             "of": 159
           },
           "country": {
-            "rank": 28,
+            "rank": 8,
             "of": 51
           },
           "continent": {
-            "rank": 63,
+            "rank": 28,
             "of": 114
           }
         }
@@ -61,14 +61,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1054,
-            "startAt": 1791651164109,
-            "endAt": 1791745544003,
-            "partial": false,
-            "delinquentMs": 6805613,
-            "incidents": 3
-          },
           {
             "epoch": 1055,
             "startAt": 1791745544003,
@@ -292,31 +284,17 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1083,
+            "startAt": 1794342784840,
+            "endAt": 1794435544795,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
-        "incidents": [
-          {
-            "startedAt": 1791730272458,
-            "endedAt": 1791730454736,
-            "durationMs": 182278,
-            "startSlot": 455690850,
-            "endSlot": 455691526
-          },
-          {
-            "startedAt": 1791667504998,
-            "endedAt": 1791668773229,
-            "durationMs": 1268231,
-            "startSlot": 455403002,
-            "endSlot": 455408601
-          },
-          {
-            "startedAt": 1791658080351,
-            "endedAt": 1791663435455,
-            "durationMs": 5355104,
-            "startSlot": 455359900,
-            "endSlot": 455384171
-          }
-        ]
+        "incidents": []
       }
     },
     "blockRewards": {
@@ -382,12 +360,12 @@
         "version": "4.4.0",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 467975275,
-        "rootSlot": 467975169,
+        "lastVote": 468396345,
+        "rootSlot": 468396257,
         "skipRatePct": 0,
-        "epochCredits": 6277077398,
-        "credits": 343887475835,
-        "activatedStakeSol": 129464.717239881,
+        "epochCredits": 4337289593,
+        "credits": 362094009577,
+        "activatedStakeSol": 129491.032631131,
         "sfdp": {
           "identity": "phz1CRbEsCtFCh2Ro5tjyu588VU1WPMwW9BJS9yFNn2",
           "participant": {
@@ -463,13 +441,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1082,
+        "epoch": 1083,
         "leaderSlotsPerEpoch": 129,
-        "blockRewardsSol": 1.52,
-        "mevSol": 0.45,
+        "blockRewardsSol": 1.77,
+        "mevSol": 0.49,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0118035,
-        "clusterEpoch": 1082
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0137427,
+        "clusterEpoch": 1083
       }
     }
   }
