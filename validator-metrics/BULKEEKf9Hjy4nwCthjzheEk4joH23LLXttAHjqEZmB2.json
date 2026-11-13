@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1055,
-            "startAt": 1791745544003,
-            "endAt": 1791839922802,
-            "partial": false,
-            "delinquentMs": 305846,
-            "incidents": 1
-          },
-          {
             "epoch": 1056,
             "startAt": 1791839922802,
             "endAt": 1791934303840,
@@ -286,15 +278,30 @@
             "partial": false,
             "delinquentMs": 92759955,
             "incidents": 1
+          },
+          {
+            "epoch": 1084,
+            "startAt": 1794435544795,
+            "endAt": 1794528424500,
+            "partial": false,
+            "delinquentMs": 92879705,
+            "incidents": 1
           }
         ],
         "incidents": [
           {
+            "startedAt": 1794551109298,
+            "endedAt": 1794551494377,
+            "durationMs": 385079,
+            "startSlot": 468825453,
+            "endSlot": 468827143
+          },
+          {
             "startedAt": 1794007706546,
-            "endedAt": null,
-            "durationMs": 505688395,
+            "endedAt": 1794545374484,
+            "durationMs": 537667938,
             "startSlot": 466294271,
-            "endSlot": null
+            "endSlot": 468798674
           },
           {
             "startedAt": 1794007535506,
@@ -358,13 +365,6 @@
             "durationMs": 317310,
             "startSlot": 457369716,
             "endSlot": 457371196
-          },
-          {
-            "startedAt": 1791823208301,
-            "endedAt": 1791823514147,
-            "durationMs": 305846,
-            "startSlot": 456115772,
-            "endSlot": 456117183
           }
         ]
       }
@@ -395,7 +395,7 @@
         "skipRatePct": 10000,
         "epochCredits": 0,
         "credits": 0,
-        "activatedStakeSol": 129218.771673083,
+        "activatedStakeSol": 18.481442919,
         "sfdp": {
           "identity": "BULKzVM41WAyQZfL34vxqdsYwEYH9mJAJyzRS4xraf8b",
           "participant": null,
@@ -468,13 +468,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1083,
-        "leaderSlotsPerEpoch": 129,
-        "blockRewardsSol": 1.77,
-        "mevSol": 0.49,
+        "epoch": 1084,
+        "leaderSlotsPerEpoch": 0,
+        "blockRewardsSol": 0,
+        "mevSol": 0,
         "commissionPct": 0,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0137427,
-        "clusterEpoch": 1083
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0132865,
+        "clusterEpoch": 1084
       }
     }
   }
