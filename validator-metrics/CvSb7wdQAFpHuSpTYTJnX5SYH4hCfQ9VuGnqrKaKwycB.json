@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1055,
-            "startAt": 1791745544003,
-            "endAt": 1791839922802,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1056,
             "startAt": 1791839922802,
             "endAt": 1791934303840,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1084,
+            "startAt": 1794435544795,
+            "endAt": 1794528424500,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -324,15 +324,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "26.10.6",
+        "version": "26.10.8",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 468396352,
-        "rootSlot": 468396352,
-        "skipRatePct": 0,
-        "epochCredits": 243325871185,
-        "credits": 19999835797563,
-        "activatedStakeSol": 6730420.503182751,
+        "lastVote": 468784293,
+        "rootSlot": 468784293,
+        "skipRatePct": 10.684,
+        "epochCredits": 139001401438,
+        "credits": 20862714428961,
+        "activatedStakeSol": 6712616.922698845,
         "sfdp": {
           "identity": "9eGrDohdNTAo61DRHyfMuqKWXqYnA3i254Wiszxe8FoY",
           "participant": null,
@@ -405,13 +405,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1083,
-        "leaderSlotsPerEpoch": 6708,
-        "blockRewardsSol": 92.19,
-        "mevSol": 25.53,
+        "epoch": 1084,
+        "leaderSlotsPerEpoch": 6706,
+        "blockRewardsSol": 89.1,
+        "mevSol": 23.95,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0137427,
-        "clusterEpoch": 1083
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0132865,
+        "clusterEpoch": 1084
       }
     }
   }
