@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1055,
-            "startAt": 1791745544003,
-            "endAt": 1791839922802,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1056,
             "startAt": 1791839922802,
             "endAt": 1791934303840,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1084,
+            "startAt": 1794435544795,
+            "endAt": 1794528424500,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -327,12 +327,12 @@
         "version": "4.3.0-rc.1",
         "commissionPct": 8,
         "delinquent": false,
-        "lastVote": 468396352,
-        "rootSlot": 468396352,
-        "skipRatePct": 5000,
-        "epochCredits": 754798868,
-        "credits": 79718543153,
-        "activatedStakeSol": 30012.254612831,
+        "lastVote": 468784291,
+        "rootSlot": 468784291,
+        "skipRatePct": null,
+        "epochCredits": 320356028,
+        "credits": 83086177759,
+        "activatedStakeSol": 30015.752524078,
         "sfdp": {
           "identity": "2bpfa8JbFfZUGUsedDsemu6vQUxbhcEM8ALSH3PgXd2d",
           "participant": {
@@ -408,13 +408,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1083,
+        "epoch": 1084,
         "leaderSlotsPerEpoch": 30,
-        "blockRewardsSol": 0.41,
+        "blockRewardsSol": 0.4,
         "mevSol": 0.11,
         "commissionPct": 8,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0137427,
-        "clusterEpoch": 1083
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0132865,
+        "clusterEpoch": 1084
       }
     }
   }
