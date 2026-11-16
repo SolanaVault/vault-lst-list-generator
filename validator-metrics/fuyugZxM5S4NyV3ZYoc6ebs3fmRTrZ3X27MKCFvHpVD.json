@@ -2,24 +2,24 @@
   "$schemaVersion": 1,
   "voteAccount": "fuyugZxM5S4NyV3ZYoc6ebs3fmRTrZ3X27MKCFvHpVD",
   "identity": "NATsUSZGohWw8xtLdxG4yus21UCkaes4FLfM2eqKbRk",
-  "epoch": 1087,
+  "epoch": 1088,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1087,
-        "stakeSol": 68694.247005477,
+        "epoch": 1088,
+        "stakeSol": 68079.840506723,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1086,
-          "scorePct": 99.40378308801671
+          "epoch": 1087,
+          "scorePct": 101.04744988206629
         },
         "country": "Singapore",
         "continent": "Asia",
         "stake": {
           "global": {
             "rank": 564,
-            "of": 700
+            "of": 699
           },
           "vault": {
             "rank": 148,
@@ -36,19 +36,19 @@
         },
         "performance": {
           "global": {
-            "rank": 485,
-            "of": 699
+            "rank": 94,
+            "of": 700
           },
           "vault": {
-            "rank": 108,
+            "rank": 29,
             "of": 158
           },
           "country": {
-            "rank": 33,
+            "rank": 6,
             "of": 44
           },
           "continent": {
-            "rank": 78,
+            "rank": 20,
             "of": 114
           }
         }
@@ -61,14 +61,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1058,
-            "startAt": 1792028028384,
-            "endAt": 1792121503531,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1059,
             "startAt": 1792121503531,
@@ -292,9 +284,25 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1087,
+            "startAt": 1794714484369,
+            "endAt": 1794807304898,
+            "partial": false,
+            "delinquentMs": 81791,
+            "incidents": 1
           }
         ],
-        "incidents": []
+        "incidents": [
+          {
+            "startedAt": 1794807223107,
+            "endedAt": null,
+            "durationMs": 3358892,
+            "startSlot": 470015999,
+            "endSlot": null
+          }
+        ]
       }
     },
     "blockRewards": {
