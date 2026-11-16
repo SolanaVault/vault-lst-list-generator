@@ -5,48 +5,9 @@
   "epoch": 1087,
   "sections": {
     "ranks": {
-      "ok": true,
-      "data": {
-        "epoch": 1087,
-        "stakeSol": 12794.779575566,
-        "creditsLastEpoch": null,
-        "voteScore": {
-          "epoch": 1086,
-          "scorePct": 0
-        },
-        "country": "Germany",
-        "continent": "Europe",
-        "stake": {
-          "global": {
-            "rank": 639,
-            "of": 700
-          },
-          "vault": null,
-          "country": {
-            "rank": 179,
-            "of": 196
-          },
-          "continent": {
-            "rank": 393,
-            "of": 428
-          }
-        },
-        "performance": {
-          "global": {
-            "rank": 693,
-            "of": 699
-          },
-          "vault": null,
-          "country": {
-            "rank": 193,
-            "of": 196
-          },
-          "continent": {
-            "rank": 425,
-            "of": 428
-          }
-        }
-      }
+      "ok": false,
+      "reason": "not_found",
+      "detail": "vote account not found in current voting set"
     },
     "delinquency": {
       "ok": true,
@@ -55,14 +16,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1058,
-            "startAt": 1792028028384,
-            "endAt": 1792121503531,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1059,
             "startAt": 1792121503531,
@@ -286,13 +239,21 @@
             "partial": false,
             "delinquentMs": 92939409,
             "incidents": 1
+          },
+          {
+            "epoch": 1087,
+            "startAt": 1794714484369,
+            "endAt": 1794807304898,
+            "partial": false,
+            "delinquentMs": 92820529,
+            "incidents": 1
           }
         ],
         "incidents": [
           {
             "startedAt": 1794235562531,
             "endedAt": null,
-            "durationMs": 533225807,
+            "durationMs": 575123699,
             "startSlot": 467356334,
             "endSlot": null
           }
