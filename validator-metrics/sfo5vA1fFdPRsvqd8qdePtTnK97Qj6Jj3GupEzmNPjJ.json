@@ -5,54 +5,9 @@
   "epoch": 1088,
   "sections": {
     "ranks": {
-      "ok": true,
-      "data": {
-        "epoch": 1088,
-        "stakeSol": 23778.622760596,
-        "creditsLastEpoch": null,
-        "voteScore": {
-          "epoch": 1087,
-          "scorePct": 0
-        },
-        "country": "Singapore",
-        "continent": "Asia",
-        "stake": {
-          "global": {
-            "rank": 626,
-            "of": 699
-          },
-          "vault": {
-            "rank": 156,
-            "of": 158
-          },
-          "country": {
-            "rank": 42,
-            "of": 44
-          },
-          "continent": {
-            "rank": 111,
-            "of": 114
-          }
-        },
-        "performance": {
-          "global": {
-            "rank": 700,
-            "of": 700
-          },
-          "vault": {
-            "rank": 158,
-            "of": 158
-          },
-          "country": {
-            "rank": 44,
-            "of": 44
-          },
-          "continent": {
-            "rank": 114,
-            "of": 114
-          }
-        }
-      }
+      "ok": false,
+      "reason": "not_found",
+      "detail": "vote account not found in current voting set"
     },
     "delinquency": {
       "ok": true,
@@ -298,7 +253,7 @@
           {
             "startedAt": 1794342698040,
             "endedAt": null,
-            "durationMs": 559486449,
+            "durationMs": 606366273,
             "startSlot": 467855999,
             "endSlot": null
           }
@@ -427,13 +382,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1087,
+        "epoch": 1088,
         "leaderSlotsPerEpoch": 24,
-        "blockRewardsSol": 0.27,
-        "mevSol": 0.08,
+        "blockRewardsSol": 0.35,
+        "mevSol": 0.1,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0112303,
-        "clusterEpoch": 1087
+        "clusterAvgRewardsPerLeaderSlotSol": 0.014538,
+        "clusterEpoch": 1088
       }
     }
   }

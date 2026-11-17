@@ -5,48 +5,9 @@
   "epoch": 1088,
   "sections": {
     "ranks": {
-      "ok": true,
-      "data": {
-        "epoch": 1088,
-        "stakeSol": 1,
-        "creditsLastEpoch": null,
-        "voteScore": {
-          "epoch": 1087,
-          "scorePct": 0
-        },
-        "country": "United States",
-        "continent": "North America",
-        "stake": {
-          "global": {
-            "rank": 698,
-            "of": 699
-          },
-          "vault": null,
-          "country": {
-            "rank": 111,
-            "of": 112
-          },
-          "continent": {
-            "rank": 126,
-            "of": 127
-          }
-        },
-        "performance": {
-          "global": {
-            "rank": 696,
-            "of": 700
-          },
-          "vault": null,
-          "country": {
-            "rank": 112,
-            "of": 112
-          },
-          "continent": {
-            "rank": 127,
-            "of": 127
-          }
-        }
-      }
+      "ok": false,
+      "reason": "not_found",
+      "detail": "vote account not found in current voting set"
     },
     "delinquency": {
       "ok": true,
@@ -292,7 +253,7 @@
           {
             "startedAt": 1792681574943,
             "endedAt": null,
-            "durationMs": 2220608938,
+            "durationMs": 2267488720,
             "startSlot": 460079999,
             "endSlot": null
           },
@@ -415,13 +376,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1087,
+        "epoch": 1088,
         "leaderSlotsPerEpoch": 0,
         "blockRewardsSol": 0,
         "mevSol": 0,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0112303,
-        "clusterEpoch": 1087
+        "clusterAvgRewardsPerLeaderSlotSol": 0.014538,
+        "clusterEpoch": 1088
       }
     }
   }
