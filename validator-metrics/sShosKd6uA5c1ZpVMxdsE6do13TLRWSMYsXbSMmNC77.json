@@ -62,14 +62,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1059,
-            "startAt": 1792121503531,
-            "endAt": 1792214868207,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1060,
             "startAt": 1792214868207,
             "endAt": 1792308582900,
@@ -292,13 +284,21 @@
             "partial": false,
             "delinquentMs": 92820529,
             "incidents": 1
+          },
+          {
+            "epoch": 1088,
+            "startAt": 1794807304898,
+            "endAt": 1794900124483,
+            "partial": false,
+            "delinquentMs": 92819585,
+            "incidents": 1
           }
         ],
         "incidents": [
           {
             "startedAt": 1794714387169,
             "endedAt": null,
-            "durationMs": 152205674,
+            "durationMs": 187799277,
             "startSlot": 469583999,
             "endSlot": null
           },
@@ -384,12 +384,12 @@
       "data": {
         "version": "4.4.1",
         "commissionPct": 0,
-        "delinquent": false,
-        "lastVote": 469582037,
-        "rootSlot": 469582037,
-        "skipRatePct": 0,
-        "epochCredits": 8629652718,
-        "credits": 105816216931,
+        "delinquent": true,
+        "lastVote": 469583999,
+        "rootSlot": 469583999,
+        "skipRatePct": null,
+        "epochCredits": 0,
+        "credits": 0,
         "activatedStakeSol": 35516.137467219,
         "sfdp": {
           "identity": "ssx2rHZNVy6J1mbFjBdmnF244kbKf46SDwokjuhb477",
