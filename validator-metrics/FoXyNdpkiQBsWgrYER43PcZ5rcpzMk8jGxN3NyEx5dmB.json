@@ -2,38 +2,38 @@
   "$schemaVersion": 1,
   "voteAccount": "FoXyNdpkiQBsWgrYER43PcZ5rcpzMk8jGxN3NyEx5dmB",
   "identity": "FoXyHJXdQGK2eHoTjSAzHq4hzxWdJvpGgyzrtPS9eAk",
-  "epoch": 1093,
+  "epoch": 1094,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1093,
-        "stakeSol": 95231.999505456,
+        "epoch": 1094,
+        "stakeSol": 91985.150984154,
         "creditsLastEpoch": null,
         "voteScore": {
-          "epoch": 1092,
-          "scorePct": 98.51323221975964
+          "epoch": 1093,
+          "scorePct": 98.16733730643482
         },
         "country": "Brazil",
         "continent": "South America",
         "stake": {
           "global": {
-            "rank": 509,
+            "rank": 513,
             "of": 685
           },
           "vault": null,
           "country": {
-            "rank": 10,
+            "rank": 11,
             "of": 13
           },
           "continent": {
-            "rank": 11,
+            "rank": 12,
             "of": 14
           }
         },
         "performance": {
           "global": {
-            "rank": 583,
+            "rank": 620,
             "of": 685
           },
           "vault": null,
@@ -55,14 +55,6 @@
         "trackedSince": 1790219008531,
         "sampleIntervalMs": 60000,
         "epochs": [
-          {
-            "epoch": 1064,
-            "startAt": 1792589825112,
-            "endAt": 1792681625743,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
           {
             "epoch": 1065,
             "startAt": 1792681625743,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1093,
+            "startAt": 1795272064656,
+            "endAt": 1795364944687,
+            "partial": false,
+            "delinquentMs": 621045,
+            "incidents": 1
           }
         ],
         "incidents": [
@@ -447,13 +447,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1092,
+        "epoch": 1093,
         "leaderSlotsPerEpoch": 96,
-        "blockRewardsSol": 1.18,
-        "mevSol": 0.37,
+        "blockRewardsSol": 0.86,
+        "mevSol": 0.25,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0122993,
-        "clusterEpoch": 1092
+        "clusterAvgRewardsPerLeaderSlotSol": 0.009004,
+        "clusterEpoch": 1093
       }
     }
   }
