@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1067,
-            "startAt": 1792864804494,
-            "endAt": 1792956544880,
-            "partial": false,
-            "delinquentMs": 309774,
-            "incidents": 1
-          },
-          {
             "epoch": 1068,
             "startAt": 1792956544880,
             "endAt": 1793048345292,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1096,
+            "startAt": 1795550764524,
+            "endAt": 1795643644156,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -302,13 +302,6 @@
             "durationMs": 341092,
             "startSlot": 463374433,
             "endSlot": 463376010
-          },
-          {
-            "startedAt": 1792941145502,
-            "endedAt": 1792941455276,
-            "durationMs": 309774,
-            "startSlot": 461303897,
-            "endSlot": 461305284
           }
         ]
       }
@@ -376,12 +369,12 @@
         "version": "4.4.1",
         "commissionPct": 1,
         "delinquent": false,
-        "lastVote": 473637541,
-        "rootSlot": 473637541,
+        "lastVote": 474037273,
+        "rootSlot": 474037273,
         "skipRatePct": 0,
-        "epochCredits": 7217389832,
-        "credits": 512416225995,
-        "activatedStakeSol": 115831.124974782,
+        "epochCredits": 5462962349,
+        "credits": 527942898520,
+        "activatedStakeSol": 115469.139731906,
         "sfdp": {
           "identity": "LodeuWMHPiPj2PUHUyca2bkpFv9HyzR3gaDBmGJ9TSS",
           "participant": {
@@ -457,13 +450,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1095,
+        "epoch": 1096,
         "leaderSlotsPerEpoch": 118,
-        "blockRewardsSol": 1.53,
-        "mevSol": 0.46,
+        "blockRewardsSol": 1.52,
+        "mevSol": 0.44,
         "commissionPct": 1,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0130022,
-        "clusterEpoch": 1095
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0128453,
+        "clusterEpoch": 1096
       }
     }
   }
