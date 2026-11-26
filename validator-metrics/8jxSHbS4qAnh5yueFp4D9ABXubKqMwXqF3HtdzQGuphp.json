@@ -2,21 +2,24 @@
   "$schemaVersion": 1,
   "voteAccount": "8jxSHbS4qAnh5yueFp4D9ABXubKqMwXqF3HtdzQGuphp",
   "identity": "4YGgmwyqztpJeAi3pzHQ4Gf9cWrMHCjZaWeWoCK6zz6X",
-  "epoch": 1096,
+  "epoch": 1097,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1096,
+        "epoch": 1097,
         "stakeSol": 1.780630516,
         "creditsLastEpoch": null,
-        "voteScore": null,
+        "voteScore": {
+          "epoch": 1096,
+          "scorePct": 0
+        },
         "country": "The Netherlands",
         "continent": "Europe",
         "stake": {
           "global": {
-            "rank": 669,
-            "of": 687
+            "rank": 668,
+            "of": 688
           },
           "vault": null,
           "country": {
@@ -24,15 +27,24 @@
             "of": 91
           },
           "continent": {
-            "rank": 411,
+            "rank": 410,
             "of": 426
           }
         },
         "performance": {
-          "global": null,
+          "global": {
+            "rank": 663,
+            "of": 687
+          },
           "vault": null,
-          "country": null,
-          "continent": null
+          "country": {
+            "rank": 91,
+            "of": 91
+          },
+          "continent": {
+            "rank": 408,
+            "of": 426
+          }
         }
       }
     },
@@ -280,7 +292,7 @@
           {
             "startedAt": 1790337211003,
             "endedAt": null,
-            "durationMs": 5343916486,
+            "durationMs": 5391590442,
             "startSlot": 450345071,
             "endSlot": null
           }
