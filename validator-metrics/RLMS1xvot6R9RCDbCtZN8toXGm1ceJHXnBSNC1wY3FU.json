@@ -2,15 +2,18 @@
   "$schemaVersion": 1,
   "voteAccount": "RLMS1xvot6R9RCDbCtZN8toXGm1ceJHXnBSNC1wY3FU",
   "identity": "RLMS1pv3YKi7CSUCKTNcFN5fFkXJc2SmCwPhbQpqZJo",
-  "epoch": 1097,
+  "epoch": 1098,
   "sections": {
     "ranks": {
       "ok": true,
       "data": {
-        "epoch": 1097,
+        "epoch": 1098,
         "stakeSol": 1.09833376,
         "creditsLastEpoch": null,
-        "voteScore": null,
+        "voteScore": {
+          "epoch": 1097,
+          "scorePct": 0
+        },
         "country": "Japan",
         "continent": "Asia",
         "stake": {
@@ -29,10 +32,19 @@
           }
         },
         "performance": {
-          "global": null,
+          "global": {
+            "rank": 683,
+            "of": 688
+          },
           "vault": null,
-          "country": null,
-          "continent": null
+          "country": {
+            "rank": 54,
+            "of": 54
+          },
+          "continent": {
+            "rank": 115,
+            "of": 116
+          }
         }
       }
     },
@@ -280,7 +292,7 @@
           {
             "startedAt": 1779506329756,
             "endedAt": null,
-            "durationMs": 16262122157,
+            "durationMs": 16307980459,
             "startSlot": 433560952,
             "endSlot": null
           }
