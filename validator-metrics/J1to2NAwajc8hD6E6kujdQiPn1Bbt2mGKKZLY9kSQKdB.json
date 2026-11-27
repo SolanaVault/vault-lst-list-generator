@@ -62,14 +62,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1068,
-            "startAt": 1792956544880,
-            "endAt": 1793048345292,
-            "partial": false,
-            "delinquentMs": 0,
-            "incidents": 0
-          },
-          {
             "epoch": 1069,
             "startAt": 1793048345292,
             "endAt": 1793140204813,
@@ -292,6 +284,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1097,
+            "startAt": 1795643644156,
+            "endAt": 1795736523915,
+            "partial": false,
+            "delinquentMs": 668488,
+            "incidents": 1
           }
         ],
         "incidents": [
@@ -323,15 +323,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "26.11.0",
+        "version": "26.11.1",
         "commissionPct": 4,
         "delinquent": false,
-        "lastVote": 474037275,
-        "rootSlot": 474037275,
+        "lastVote": 474437437,
+        "rootSlot": 474437437,
         "skipRatePct": 0,
-        "epochCredits": 16814219043,
-        "credits": 1667117049378,
-        "activatedStakeSol": 353771.578756961,
+        "epochCredits": 13215206514,
+        "credits": 1716878606650,
+        "activatedStakeSol": 353672.48507533,
         "sfdp": {
           "identity": "A4hyMd3FyvUJSRafDUSwtLLaQcxRP4r1BRC9w2AJ1to2",
           "participant": null,
@@ -404,13 +404,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1096,
-        "leaderSlotsPerEpoch": 361,
-        "blockRewardsSol": 4.64,
-        "mevSol": 1.34,
+        "epoch": 1097,
+        "leaderSlotsPerEpoch": 360,
+        "blockRewardsSol": 4.12,
+        "mevSol": 1.12,
         "commissionPct": 4,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0128453,
-        "clusterEpoch": 1096
+        "clusterAvgRewardsPerLeaderSlotSol": 0.011454,
+        "clusterEpoch": 1097
       }
     }
   }
