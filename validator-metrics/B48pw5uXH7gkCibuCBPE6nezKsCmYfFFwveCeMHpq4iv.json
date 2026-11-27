@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1068,
-            "startAt": 1792956544880,
-            "endAt": 1793048345292,
-            "partial": false,
-            "delinquentMs": 13670829,
-            "incidents": 3
-          },
-          {
             "epoch": 1069,
             "startAt": 1793048345292,
             "endAt": 1793140204813,
@@ -286,6 +278,14 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1097,
+            "startAt": 1795643644156,
+            "endAt": 1795736523915,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
@@ -309,27 +309,6 @@
             "durationMs": 297484,
             "startSlot": 462588163,
             "endSlot": 462589506
-          },
-          {
-            "startedAt": 1793039129708,
-            "endedAt": 1793041235058,
-            "durationMs": 2105350,
-            "startSlot": 461765127,
-            "endSlot": 461775010
-          },
-          {
-            "startedAt": 1793029612739,
-            "endedAt": 1793038835648,
-            "durationMs": 9222909,
-            "startSlot": 461720347,
-            "endSlot": 461763768
-          },
-          {
-            "startedAt": 1793027312860,
-            "endedAt": 1793029655430,
-            "durationMs": 2342570,
-            "startSlot": 461709505,
-            "endSlot": 461720398
           }
         ]
       }
@@ -373,12 +352,12 @@
         "version": "4.4.1",
         "commissionPct": 5,
         "delinquent": false,
-        "lastVote": 474037275,
-        "rootSlot": 474037275,
+        "lastVote": 474437437,
+        "rootSlot": 474437437,
         "skipRatePct": 0,
-        "epochCredits": 4137447628,
-        "credits": 394105369373,
-        "activatedStakeSol": 81852.618277141,
+        "epochCredits": 2259885672,
+        "credits": 404227808459,
+        "activatedStakeSol": 81725.131612501,
         "sfdp": {
           "identity": "DupN8puwoPdFo9EYm8AXemEn9cMsore1QmZzfPaxyUG4",
           "participant": {
@@ -454,13 +433,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1096,
+        "epoch": 1097,
         "leaderSlotsPerEpoch": 83,
-        "blockRewardsSol": 1.07,
-        "mevSol": 0.31,
+        "blockRewardsSol": 0.95,
+        "mevSol": 0.26,
         "commissionPct": 5,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.0128453,
-        "clusterEpoch": 1096
+        "clusterAvgRewardsPerLeaderSlotSol": 0.011454,
+        "clusterEpoch": 1097
       }
     }
   }
