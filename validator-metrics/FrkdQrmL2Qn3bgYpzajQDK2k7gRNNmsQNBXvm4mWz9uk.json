@@ -56,14 +56,6 @@
         "sampleIntervalMs": 60000,
         "epochs": [
           {
-            "epoch": 1069,
-            "startAt": 1793048345292,
-            "endAt": 1793140204813,
-            "partial": false,
-            "delinquentMs": 215042,
-            "incidents": 1
-          },
-          {
             "epoch": 1070,
             "startAt": 1793140204813,
             "endAt": 1793232245219,
@@ -286,9 +278,24 @@
             "partial": false,
             "delinquentMs": 0,
             "incidents": 0
+          },
+          {
+            "epoch": 1098,
+            "startAt": 1795736523915,
+            "endAt": 1795829284084,
+            "partial": false,
+            "delinquentMs": 0,
+            "incidents": 0
           }
         ],
         "incidents": [
+          {
+            "startedAt": 1795834210115,
+            "endedAt": 1795834474045,
+            "durationMs": 263930,
+            "startSlot": 474791237,
+            "endSlot": 474792359
+          },
           {
             "startedAt": 1794551229595,
             "endedAt": 1794551494377,
@@ -302,13 +309,6 @@
             "durationMs": 266745,
             "startSlot": 465925264,
             "endSlot": 465926401
-          },
-          {
-            "startedAt": 1793066699862,
-            "endedAt": 1793066914904,
-            "durationMs": 215042,
-            "startSlot": 461894891,
-            "endSlot": 461895773
           }
         ]
       }
@@ -331,15 +331,15 @@
     "software": {
       "ok": true,
       "data": {
-        "version": "4.4.1",
+        "version": "4.4.2",
         "commissionPct": 0,
         "delinquent": false,
-        "lastVote": 474437437,
-        "rootSlot": 474437437,
+        "lastVote": 474834201,
+        "rootSlot": 474834201,
         "skipRatePct": null,
-        "epochCredits": 264032038,
-        "credits": 72440188576,
-        "activatedStakeSol": 15424.270937502,
+        "epochCredits": 169465586,
+        "credits": 74329354980,
+        "activatedStakeSol": 15456.100866034,
         "sfdp": {
           "identity": "6bBw4LYVzXQoNs1TH4yVavtpCu5cdwYGvmuXVcZmNeKy",
           "participant": null,
@@ -412,13 +412,13 @@
       "ok": true,
       "data": {
         "basis": "cluster_epoch_average",
-        "epoch": 1097,
+        "epoch": 1098,
         "leaderSlotsPerEpoch": 16,
-        "blockRewardsSol": 0.18,
+        "blockRewardsSol": 0.16,
         "mevSol": 0.05,
         "commissionPct": 0,
-        "clusterAvgRewardsPerLeaderSlotSol": 0.011454,
-        "clusterEpoch": 1097
+        "clusterAvgRewardsPerLeaderSlotSol": 0.0098479,
+        "clusterEpoch": 1098
       }
     }
   }
